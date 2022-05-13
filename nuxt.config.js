@@ -1,7 +1,19 @@
+import pkg from './package.json'
+
 export default {
+  version: pkg.version,
+
+  srcDir: 'src/',
+
+  telemetry: false,
+
+  tailwindcss: {
+    exposeConfig: true,
+    configPath: '~~/tailwind.config.js',
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'broadcast-service-nuxt',
     htmlAttrs: {
       lang: 'en',
     },
@@ -21,7 +33,12 @@ export default {
   plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: [
+    {
+      path: '~/components', // will get any components nested in let's say /components/test too
+      pathPrefix: false,
+    },
+  ],
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -43,6 +60,11 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/',
+  },
+
+  router: {
+    middleware: [],
+    prefetchLinks: false,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
