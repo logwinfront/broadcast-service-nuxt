@@ -1,6 +1,7 @@
 <template>
   <div>
     <TheHeader />
+
     <Nuxt />
   </div>
 </template>
@@ -8,9 +9,9 @@
 <script>
 import TheHeader from '../components/header/TheHeader.vue'
 export default {
-  name: 'LayoutDefault',
+  name: 'LayoutBroadcasts',
   components: { TheHeader },
-  layout: 'default',
+  layout: 'broadcasts',
 }
 </script>
 

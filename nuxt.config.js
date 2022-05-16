@@ -1,7 +1,12 @@
+import { resolve } from 'path'
 import pkg from './package.json'
 
 export default {
   version: pkg.version,
+
+  alias: {
+    '~': resolve(__dirname, './'),
+  },
 
   srcDir: 'src/',
 
@@ -27,10 +32,14 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['~/assets/styles/base.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/axios'],
+  plugins: [
+    '~/plugins/axios',
+    { src: '~/plugins/vue-awesome-swiper', mode: 'client' },
+    // '~/plugins/vue-agile'
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [
@@ -54,7 +63,19 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
   ],
+
+  proxy: {
+    '/api': {
+      target: 'http://185.162.8.250:1230',
+      // pathRewrite: { '^/api/': '' },
+    },
+    '/media': {
+      target: 'http://185.162.8.250:1230',
+      // pathRewrite: { '^/api/': '' },
+    },
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   // axios: {
@@ -68,5 +89,7 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: ['vue-agile'],
+  },
 }

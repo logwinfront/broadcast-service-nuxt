@@ -1,13 +1,16 @@
+// eslint-disable-next-line import/no-mutable-exports
+export let api
+
 export default function ({ $axios, redirect }) {
+  api = $axios
+
   if (process.client) {
-    console.log('client')
-    $axios.setBaseURL('https://api.sportefir.com')
+    $axios.setBaseURL('/api')
   }
 
   // Change URL only for server
   if (process.server) {
-    console.log('server')
-    $axios.setBaseURL('https://api.sportefir.com')
+    $axios.setBaseURL('https://api.sportefir.com/api')
   }
 
   $axios.onRequest((config) => {

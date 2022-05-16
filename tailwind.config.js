@@ -44,6 +44,7 @@ module.exports = {
       },
       gray: {
         DEFAULT: '#9e9e9e',
+        700: '#434a54',
       },
       white: '#fff',
     },
@@ -52,7 +53,7 @@ module.exports = {
       sm: '425px',
       md: '768px',
       lg: '1024px',
-      xl: '1170px',
+      xl: '1260px',
     },
     container: {
       center: true,

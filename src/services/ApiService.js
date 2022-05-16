@@ -1,5 +1,7 @@
-export const ApiService = (axios) => ({
+import { api } from '~/src/plugins/axios'
+
+export default {
   slider: {
-    getItems: () => axios.get(),
+    getItems: (params) => api.get('/v1/slider/items/list/', { params }),
   },
-})
+}
