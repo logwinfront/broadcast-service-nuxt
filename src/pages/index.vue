@@ -2,12 +2,17 @@
   <div>
     <MainSlider class="mt-3" :slides="mainSlider" />
 
-    <div class="lg:container mx-auto pt-7">
+    <div class="lg:container mx-auto">
       <TheBroadCastSlider
+        class="pt-7 pb-4"
         :items="actualBroadcasts"
         title="Актуальные трансляции"
       />
+
+      <TheDateSlider />
     </div>
+
+    <div></div>
   </div>
 </template>
 
@@ -15,9 +20,10 @@
 import ApiService from '~/src/services/ApiService'
 import MainSlider from '~/src/components/sliders/main/MainSlider'
 import TheBroadCastSlider from '~/src/components/sliders/broadcasts/TheBroadCastSlider'
+import TheDateSlider from '~/src/components/sliders/dates/TheDateSlider'
 export default {
   name: 'IndexPage',
-  components: { TheBroadCastSlider, MainSlider },
+  components: { TheDateSlider, TheBroadCastSlider, MainSlider },
   data() {
     return {
       mainSlider: [],
