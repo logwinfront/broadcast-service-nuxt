@@ -64,15 +64,59 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
+    '@nuxtjs/i18n',
   ],
+
+  i18n: {
+    vueI18nLoader: true,
+    locales: [
+      {
+        code: 'en',
+        iso: 'en-EN',
+        file: 'en.js',
+        dir: 'ltr',
+        name: 'English',
+        dateFnsCode: 'enGB',
+      },
+      {
+        code: 'ru',
+        iso: 'ru-RU',
+        file: 'ru.js',
+        dir: 'ltr',
+        name: 'Русский',
+        dateFnsCode: 'ru',
+      },
+    ],
+    defaultLocale: 'ru',
+    vueI18n: {
+      fallbackLocale: 'ru',
+    },
+    lazy: true,
+    langDir: '~/lang/',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',
+    },
+  },
 
   proxy: {
     '/api': {
-      target: 'http://185.162.8.250:1230',
+      target: 'https://api.sportefir.com',
+      changeOrigin: true,
+      logLevel: 'info',
+      headers: {
+        Connection: 'keep-alive',
+      },
       // pathRewrite: { '^/api/': '' },
     },
     '/media': {
-      target: 'http://185.162.8.250:1230',
+      target: 'https://api.sportefir.com',
+      changeOrigin: true,
+      logLevel: 'info',
+      headers: {
+        Connection: 'keep-alive',
+      },
       // pathRewrite: { '^/api/': '' },
     },
   },

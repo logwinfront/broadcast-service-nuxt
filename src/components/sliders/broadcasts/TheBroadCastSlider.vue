@@ -11,18 +11,6 @@
         <TheBroadCastSliderItem :item="item" />
       </swiper-slide>
     </swiper>
-
-    <!--    <Splide :options="splideOptions"-->
-    <!--            aria-label="Название промо баннера"-->
-    <!--    >-->
-    <!--      <SplideSlide-->
-    <!--        v-for="(item, idx) in items"-->
-    <!--        :key="`broadcast-${idx}`"-->
-    <!--        class="the-broadcast-item"-->
-    <!--      >-->
-    <!--        <TheBroadCastItem :item="item" />-->
-    <!--      </SplideSlide>-->
-    <!--    </Splide>-->
   </div>
 </template>
 
@@ -38,7 +26,7 @@ export default {
     },
     title: {
       type: String,
-      required: true,
+      default: null,
     },
   },
   data() {

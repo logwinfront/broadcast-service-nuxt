@@ -36,7 +36,13 @@ module.exports = {
         DEFAULT: '#1f1b2e',
       },
       secondary: {
+        200: '#ff7096',
+        300: '#ff4778',
+        400: '#ff1f5a',
         DEFAULT: '#ea003d',
+        600: '#cc0036',
+        700: '#a3002c',
+        800: '#7a0021',
       },
       blue: {
         700: '#192039',

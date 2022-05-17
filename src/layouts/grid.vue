@@ -1,0 +1,74 @@
+<template>
+  <div>
+    <TheHeader />
+
+    <div class="grid-layout lg:container pt-4 mx-auto">
+      <div class="grid-layout-banner">
+        <a href="#" target="_blank" class="grid-layout-banner__item">
+          <img
+            src="https://ol3.cdn.runad.co/uploads/media/0/7/69170/v1/Billboard.png"
+            alt=""
+          />
+        </a>
+      </div>
+      <div class="grid-layout-content">
+        <router-view />
+      </div>
+      <div class="grid-layout-sidebar">
+        <a href="#" target="_blank" class="grid-layout-sidebar__item">
+          <img
+            src="https://ol3.cdn.runad.co/uploads/media/4/9/68894/v1/300x600.jpg"
+            alt=""
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import TheHeader from '../components/header/TheHeader.vue'
+export default {
+  name: 'GridBroadcasts',
+  components: { TheHeader },
+  layout: 'grid',
+}
+</script>
+
+<style lang="scss">
+.grid-layout {
+  display: grid;
+  grid-gap: 16px;
+  grid-template-columns: 1fr 300px;
+  grid-template-areas:
+    'banner  banner'
+    'content sidebar';
+
+  &-banner {
+    grid-area: banner;
+    transition: 0.3s;
+
+    &__item {
+      display: block;
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  &-content {
+    grid-area: content;
+  }
+
+  &-sidebar {
+    grid-area: sidebar;
+
+    &__item {
+      display: block;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+</style>

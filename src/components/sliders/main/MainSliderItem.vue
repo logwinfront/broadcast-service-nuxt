@@ -6,7 +6,7 @@
       <p class="the-banner-item__title">{{ title }}</p>
       <p class="the-banner-item__subtitle">{{ slide.sub_title }}</p>
 
-      <TheButton :to="link" class="bg-secondary" small>
+      <TheButton :to="link" class="bg-secondary hover:bg-secondary-400" small>
         {{ linkText }}
       </TheButton>
     </div>
