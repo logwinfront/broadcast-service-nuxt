@@ -43,8 +43,8 @@ export default {
   grid-gap: 10px;
   grid-template-columns: 1fr;
   grid-template-areas:
-    'banner  banner'
-    'content content';
+    'banner'
+    'content';
 
   &-banner {
     grid-area: banner;
@@ -63,14 +63,7 @@ export default {
   }
 
   &-sidebar {
-    grid-area: sidebar;
-
-    &__item {
-      display: block;
-      img {
-        width: 100%;
-      }
-    }
+    display: none;
   }
 }
 
@@ -81,6 +74,17 @@ export default {
     grid-template-areas:
       'banner  banner'
       'content sidebar';
+
+    &-sidebar {
+      grid-area: sidebar;
+
+      &__item {
+        display: block;
+        img {
+          width: 100%;
+        }
+      }
+    }
   }
 }
 </style>

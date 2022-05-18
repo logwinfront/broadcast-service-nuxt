@@ -17,7 +17,7 @@
           class="w-8 h-8 lg:w-14 lg:h-14 border-b-2 lg:border-b-4 border-secondary rounded-full animate-spin"
         ></div>
       </div>
-      <div v-else-if="$fetchState.error">asdsad</div>
+      <!--      <div v-else-if="$fetchState.error">asdsad</div>-->
       <template v-if="broadcast">
         <img
           v-if="broadcastData.image"
@@ -53,7 +53,11 @@ export default {
     }
   },
   async fetch() {
-    await Promise.all([this.getBroadcast()])
+    await Promise.all([this.getBroadcast()]).catch((e) => {
+      if (process.server) {
+        this.$nuxt.context.res.statusCode = 404
+      }
+    })
   },
   computed: {
     broadcastLink() {

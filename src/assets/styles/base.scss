@@ -1,3 +1,6 @@
+@import 'modules/fonts';
+
 body {
   @apply bg-blue-800;
+  font-family: 'Commissioner', sans-serif;
 }
