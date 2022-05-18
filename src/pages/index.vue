@@ -2,7 +2,7 @@
   <div>
     <MainSlider class="mt-3" :slides="mainSlider" />
 
-    <div class="lg:container mx-auto mb-40">
+    <div class="lg:container px-2.5 mx-auto mb-40">
       <TheBroadCastSlider
         class="pt-7 pb-4"
         :items="actualBroadcasts"
@@ -75,20 +75,28 @@ export default {
       return response?.data?.results ?? []
     }
 
-    this.mainSlider = await getSlides({
-      active: true,
-      slider__code: 'main',
-      page_size: 50,
-    })
+    const mainSlider = async () => {
+      this.mainSlider = await getSlides({
+        active: true,
+        slider__code: 'main',
+        page_size: 50,
+      })
+    }
 
-    this.actualBroadcasts = await getSlides({
-      active: true,
-      slider__code: 'actual_broadcasts',
-      page_size: 20,
-    })
+    const actualBroadcasts = async () => {
+      this.actualBroadcasts = await getSlides({
+        active: true,
+        slider__code: 'actual_broadcasts',
+        page_size: 20,
+      })
+    }
 
-    await this.getSports()
-    await this.getBroadcasts()
+    await Promise.all([
+      mainSlider(),
+      actualBroadcasts(),
+      this.getSports(),
+      this.getBroadcasts(),
+    ])
   },
 
   computed: {

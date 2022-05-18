@@ -21,7 +21,7 @@ export default {
   name: 'TheTranslationsWrapper',
   props: {
     tournament: {
-      type: String,
+      type: Object,
       default: null,
     },
     currentDate: {
@@ -63,8 +63,8 @@ export default {
         params.sport__slug = this.$route.params.sport
       }
 
-      const tournament = this.tournament
-        ? this.tournament
+      const tournament = this.tournament?.slug
+        ? this.tournament?.slug
         : this.$route.params.tournament
 
       if (tournament) {

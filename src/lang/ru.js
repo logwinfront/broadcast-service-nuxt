@@ -3,4 +3,8 @@ export default {
   all: 'Все',
   today: 'Сегодня',
   watch: 'Смотреть',
+  home: 'Главная',
+  notFound: {
+    broadcasts: 'Нет доступных трансляций',
+  },
 }

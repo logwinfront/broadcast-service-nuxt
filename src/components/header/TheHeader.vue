@@ -1,11 +1,8 @@
 <template>
   <div class="sticky top-0 bg-blue-800 z-10 py-2">
-    <div class="lg:container mx-auto">
+    <div class="lg:container px-2.5 mx-auto">
       <div class="w-full flex items-center">
-        <nuxt-link
-          :to="{ name: 'home' }"
-          class="flex items-center no-underline"
-        >
+        <nuxt-link :to="localePath('/')" class="flex items-center no-underline">
           <img
             class="mr-2.5 h-12"
             src="../../assets/images/logo.svg"

@@ -1,5 +1,13 @@
 <template>
   <TheTranslationsWrapper :current-date="currentDate">
+    <TheBreadcrumbs
+      :breadcrumbs="breadcrumbs"
+      :title="breadcrumbsTitle"
+      show-title
+      class="mb-4"
+      :loading="loading.tournament"
+    />
+
     <TheDateSlider
       class="mb-8"
       :now-date="currentDate"
@@ -24,18 +32,61 @@
 import TheTranslationsWrapper from '~/src/components/TheTranslationsWrapper'
 import TheBroadcastsTable from '~/src/components/table/TheBroadcastsTable'
 import TheDateSlider from '~/src/components/sliders/dates/TheDateSlider'
+import TheBreadcrumbs from '~/src/components/breadcrumbs/TheBreadcrumbs'
+import ApiService from '~/src/services/ApiService'
 export default {
   name: 'SportPage',
-  components: { TheDateSlider, TheBroadcastsTable, TheTranslationsWrapper },
+  components: {
+    TheBreadcrumbs,
+    TheDateSlider,
+    TheBroadcastsTable,
+    TheTranslationsWrapper,
+  },
   layout: 'grid',
   data() {
     return {
       currentDate: new Date(new Date().setUTCHours(0, 0, 0, 0)).getTime(),
+      tournament: null,
+      sport: null,
+      loading: {
+        tournament: true,
+      },
     }
+  },
+  async fetch() {
+    // await this.getSportInfo()
+    // await this.getTournamentInfo()
+    await Promise.all([this.getSportInfo(), this.getTournamentInfo()])
+  },
+  computed: {
+    breadcrumbsTitle() {
+      return this.tournament?.header_h1 || this.tournament?.name || ''
+    },
+    breadcrumbs() {
+      return [
+        { name: this.$t('home'), link: '/' },
+        { name: this.sport?.name, link: `/${this.sport?.slug}` },
+        { name: this.tournament?.name },
+      ]
+    },
   },
   methods: {
     updateCurrentDate(val) {
       this.currentDate = val
+    },
+    async getTournamentInfo() {
+      this.loading.tournament = true
+      const response = await ApiService.tournament
+        .list({ tournament__slug: this.$route.params.tournament })
+        .catch((e) => {})
+      this.tournament = response?.data?.[0]?.tournament ?? null
+      this.loading.tournament = false
+    },
+    async getSportInfo() {
+      const response = await ApiService.sport
+        .item(this.$route.params.sport)
+        .catch((e) => {})
+      this.sport = response?.data ?? null
     },
   },
 }

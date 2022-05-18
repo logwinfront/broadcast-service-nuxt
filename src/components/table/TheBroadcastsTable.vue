@@ -1,13 +1,26 @@
 <template>
-  <div class="bg-primary rounded p-4 relative broadcast-table flex flex-col">
+  <div
+    class="bg-primary rounded p-4 relative broadcast-table flex flex-col"
+    :class="{ 'broadcast-table--loaded': !loading }"
+  >
     <div
       v-if="loading"
-      class="absolute inset-4 bg-gray bg-opacity-10 flex justify-center items-center rounded z-10"
+      class="absolute inset-4 bg-primary bg-opacity-50 flex justify-center items-center rounded z-10"
     >
       <div
         class="w-8 h-8 lg:w-14 lg:h-14 border-b-2 lg:border-b-4 border-secondary rounded-full animate-spin"
       ></div>
     </div>
+
+    <header v-if="title" class="pb-4 z-10">
+      <nuxt-link
+        v-if="titleLink"
+        class="text-white font-semibold text-lg"
+        :to="localePath(titleLink)"
+        >{{ title }}</nuxt-link
+      >
+      <h3 v-else class="text-white font-semibold text-lg">{{ title }}</h3>
+    </header>
 
     <main class="flex-1">
       <TheBroadcastsTableItem
@@ -16,10 +29,11 @@
         :broadcast="broadcast"
         :show-tournament="showTournament"
         class="border-b border-gray-700"
-        :class="{ 'last:border-b-0': !showFooter }"
+        :class="{ 'last:border-b-0': !showFooterLocal }"
       />
     </main>
     <footer
+      v-if="showFooterLocal"
       class="w-full flex justify-end items-center text-white pt-4 pb-2 px-2"
     >
       <div class="text-sm">{{ paginationLabel }}</div>
@@ -51,6 +65,14 @@ export default {
   name: 'TheBroadcastsTable',
   components: { TheBroadcastsTableItem, Icon },
   props: {
+    title: {
+      type: String,
+      default: null,
+    },
+    titleLink: {
+      type: String,
+      default: null,
+    },
     broadcasts: {
       type: Array,
       required: true,
@@ -77,6 +99,12 @@ export default {
     },
   },
   computed: {
+    showFooterLocal() {
+      if (!this.showFooter) {
+        return false
+      }
+      return this.pagesNumber > 1
+    },
     pagesNumber() {
       return Math.ceil(this.count / BROADCAST_PER_PAGE)
     },
@@ -116,6 +144,8 @@ export default {
 
 <style lang="scss">
 .broadcast-table {
-  min-height: 200px;
+  &:not(.broadcast-table--loaded) {
+    min-height: 130px;
+  }
 }
 </style>

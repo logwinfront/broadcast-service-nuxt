@@ -2,10 +2,11 @@
   <div>
     <TheHeader />
 
-    <div class="grid-layout lg:container pt-4 mx-auto">
+    <div class="grid-layout lg:container px-2.5 pt-4 mx-auto">
       <div class="grid-layout-banner">
         <a href="#" target="_blank" class="grid-layout-banner__item">
           <img
+            class="rounded"
             src="https://ol3.cdn.runad.co/uploads/media/0/7/69170/v1/Billboard.png"
             alt=""
           />
@@ -17,6 +18,7 @@
       <div class="grid-layout-sidebar">
         <a href="#" target="_blank" class="grid-layout-sidebar__item">
           <img
+            class="rounded"
             src="https://ol3.cdn.runad.co/uploads/media/4/9/68894/v1/300x600.jpg"
             alt=""
           />
@@ -38,11 +40,11 @@ export default {
 <style lang="scss">
 .grid-layout {
   display: grid;
-  grid-gap: 16px;
-  grid-template-columns: 1fr 300px;
+  grid-gap: 10px;
+  grid-template-columns: 1fr;
   grid-template-areas:
     'banner  banner'
-    'content sidebar';
+    'content content';
 
   &-banner {
     grid-area: banner;
@@ -69,6 +71,16 @@ export default {
         width: 100%;
       }
     }
+  }
+}
+
+@media (min-width: 991px) {
+  .grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    grid-template-areas:
+      'banner  banner'
+      'content sidebar';
   }
 }
 </style>

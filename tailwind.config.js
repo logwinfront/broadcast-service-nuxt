@@ -53,6 +53,7 @@ module.exports = {
         700: '#434a54',
       },
       white: '#fff',
+      black: '#000',
     },
     screens: {
       xs: '375px',

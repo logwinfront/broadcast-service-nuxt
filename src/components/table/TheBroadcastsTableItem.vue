@@ -9,10 +9,10 @@
         <div
           class="broadcast-table-item__team broadcast-table-item__team--left"
         >
-          <div class="truncate font-light" :title="broadcast.team1.name">
-            {{ broadcast.team1.name }}
+          <div class="truncate font-light" :title="teamsData.team1.name">
+            {{ teamsData.team1.name }}
           </div>
-          <img v-if="broadcast.team1.logo" :src="broadcast.team1.logo" alt="" />
+          <img v-if="teamsData.team1.logo" :src="teamsData.team1.logo" alt="" />
         </div>
 
         <div class="px-5 text-gray">-vs-</div>
@@ -20,23 +20,26 @@
         <div
           class="broadcast-table-item__team broadcast-table-item__team--right"
         >
-          <img v-if="broadcast.team2.logo" :src="broadcast.team2.logo" alt="" />
-          <div class="truncate font-light" :title="broadcast.team2.name">
-            {{ broadcast.team2.name }}
+          <img v-if="teamsData.team2.logo" :src="teamsData.team2.logo" alt="" />
+          <div class="truncate font-light" :title="teamsData.team2.name">
+            {{ teamsData.team2.name }}
           </div>
         </div>
       </div>
       <nuxt-link
-        v-if="showTournament"
+        v-if="showTournament && tournamentName"
         :to="tournamentLink"
         class="text-gray text-center text-xs"
-        >{{ broadcast.tournament.name }}</nuxt-link
+        >{{ tournamentName }}</nuxt-link
       >
     </div>
     <div class="w-40 flex justify-end pr-2">
-      <TheButton class="bg-secondary hover:bg-secondary-400" small>{{
-        $t('watch')
-      }}</TheButton>
+      <TheButton
+        :to="broadcastLink"
+        class="bg-secondary hover:bg-secondary-400"
+        small
+        >{{ $t('watch') }}</TheButton
+      >
     </div>
   </div>
 </template>
@@ -61,6 +64,21 @@ export default {
     },
   },
   computed: {
+    broadcastLink() {
+      return `/broadcast/${this.broadcast.id}`
+    },
+    teamsData() {
+      return {
+        team1: {
+          name: this.broadcast?.team1?.name ?? '',
+          icon: this.broadcast?.team1?.logo ?? null,
+        },
+        team2: {
+          name: this.broadcast?.team2?.name ?? '',
+          icon: this.broadcast?.team2?.logo ?? null,
+        },
+      }
+    },
     localeOptions() {
       return { locale: locales[this.$i18n.localeProperties.dateFnsCode] }
     },
@@ -75,6 +93,9 @@ export default {
     },
     tournamentLink() {
       return `/${this.broadcast.sport?.slug}/${this.broadcast.tournament?.slug}`
+    },
+    tournamentName() {
+      return this.broadcast?.tournament?.name
     },
   },
 }

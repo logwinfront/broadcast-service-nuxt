@@ -1,7 +1,7 @@
 <template>
   <component
     :is="typeComponent"
-    :to="to"
+    :to="localePath(to)"
     :tag="to ? 'button' : null"
     :disabled="disabled"
     class="app-button rounded"
