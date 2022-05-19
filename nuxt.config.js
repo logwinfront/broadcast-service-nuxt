@@ -10,6 +10,11 @@ export default {
 
   srcDir: 'src/',
 
+  server: {
+    host: '0.0.0.0',
+    port: 3010, // default: 3000
+  },
+
   telemetry: false,
 
   tailwindcss: {
@@ -18,17 +23,50 @@ export default {
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
-  head: {
-    htmlAttrs: {
-      lang: 'en',
-    },
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
-    ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+  head() {
+    const i18nHead = this.$nuxtI18nHead({ addSeoAttributes: true })
+
+    return {
+      meta: [
+        { charset: 'utf-8' },
+        {
+          name: 'viewport',
+          content:
+            'user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width',
+        },
+        { name: 'format-detection', content: 'telephone=no' },
+        ...i18nHead.meta,
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        {
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/apple-touch-icon.png',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '32x32',
+          href: '/favicon-32x32.png',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16',
+          href: '/favicon-16x16.png',
+        },
+        { rel: 'mask-icon', color: '#43b655', href: '/safari-pinned-tab.svg' },
+        { rel: 'manifest', href: '/site.webmanifest' },
+        ...i18nHead.link,
+      ],
+      htmlAttrs: {
+        ...i18nHead.htmlAttrs,
+      },
+      bodyAttrs: {
+        class: 'ui-scroll',
+      },
+    }
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -120,12 +158,6 @@ export default {
       // pathRewrite: { '^/api/': '' },
     },
   },
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  // axios: {
-  //   // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-  //   baseURL: '/',
-  // },
 
   router: {
     middleware: [],

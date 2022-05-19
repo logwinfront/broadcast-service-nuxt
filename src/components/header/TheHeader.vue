@@ -5,15 +5,9 @@
         <nuxt-link :to="localePath('/')" class="flex items-center no-underline">
           <img
             class="mr-2.5 h-12"
-            src="../../assets/images/logo.svg"
+            src="../../assets/images/sportefir_1.svg"
             alt="logo"
           />
-          <div
-            class="font-semibold text-xl text-secondary flex flex-col leading-5"
-          >
-            <span>SPORT</span>
-            <span>EFIR.COM</span>
-          </div>
         </nuxt-link>
 
         <ul class="nav ml-auto flex items-center h-full">

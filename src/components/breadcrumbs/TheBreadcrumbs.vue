@@ -16,7 +16,7 @@
               :key="n"
               class="flex items-center leading-4 pb-0.5"
             >
-              <div class="animate-pulse h-4 w-20 bg-gray-700 rounded"></div>
+              <div class="bg-primary-400 h-4 w-20 rounded"></div>
             </li>
           </template>
           <template v-else>
@@ -38,10 +38,7 @@
           </template>
         </ul>
         <template v-if="title || showTitle">
-          <div
-            v-if="loading"
-            class="animate-pulse h-5 w-24 bg-gray-700 rounded"
-          ></div>
+          <div v-if="loading" class="h-5 w-24 bg-primary-400 rounded"></div>
           <h1
             v-else
             class="leading-none text-white mt-0 font-semibold text-2xl"

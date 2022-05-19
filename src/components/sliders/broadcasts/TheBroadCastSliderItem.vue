@@ -1,29 +1,56 @@
 <template>
-  <nuxt-link :to="linkToBroadCast" class="the-broadcast-item-card rounded-lg">
-    <div class="the-broadcast-item-card__bg" :style="styles"></div>
+  <component
+    :is="component"
+    :to="linkToBroadCast"
+    class="the-broadcast-item-card h-36 rounded-md"
+  >
+    <div class="the-broadcast-item-card__bg bg-primary" :style="styles"></div>
 
-    <div class="the-broadcast-item__date rounded bg-gray-700">
-      {{ startBroadcastDate }}
-    </div>
+    <template v-if="isPlaceholder || !item">
+      <div
+        class="the-broadcast-item__date w-24 rounded bg-primary-400 h-5 flex items-center"
+      ></div>
 
-    <div class="the-broadcast-item__logos">
-      <TheImg
-        :src="item.broadcast.team1.logo"
-        :alt="item.broadcast.team1.name"
-      />
+      <div class="the-broadcast-item__logos">
+        <div class="h-12 w-12 bg-primary-400 mr-6 rounded"></div>
 
-      <Icon icon="ph:x" />
+        <Icon icon="ph:x" />
 
-      <TheImg
-        :src="item.broadcast.team2.logo"
-        :alt="item.broadcast.team2.name"
-      />
-    </div>
+        <div class="h-12 w-12 bg-primary-400 ml-6 rounded"></div>
+      </div>
 
-    <div class="the-broadcast-item__title truncate px-5">
-      {{ item.broadcast.title }}
-    </div>
-  </nuxt-link>
+      <div
+        class="the-broadcast-item__title truncate px-5 flex items-center justify-center"
+      >
+        <div class="h-3 w-52 bg-primary-400 rounded-sm"></div>
+      </div>
+    </template>
+    <template v-else>
+      <div class="the-broadcast-item__date rounded bg-gray-700 h-5">
+        {{ startBroadcastDate }}
+      </div>
+
+      <div class="the-broadcast-item__logos">
+        <TheImg
+          class="h-12"
+          :src="item.broadcast.team1.logo"
+          :alt="item.broadcast.team1.name"
+        />
+
+        <Icon icon="ph:x" />
+
+        <TheImg
+          class="h-12"
+          :src="item.broadcast.team2.logo"
+          :alt="item.broadcast.team2.name"
+        />
+      </div>
+
+      <div class="the-broadcast-item__title truncate px-5">
+        {{ item.broadcast.title }}
+      </div>
+    </template>
+  </component>
 </template>
 
 <script>
@@ -37,10 +64,20 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true,
+      default: null,
+    },
+    isPlaceholder: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
+    component() {
+      if (this.isPlaceholder) {
+        return 'div'
+      }
+      return 'nuxt-link'
+    },
     startBroadcastDate() {
       const dateStart = new Date(this.item.broadcast.datetime_start)
 
@@ -55,13 +92,19 @@ export default {
     },
 
     styles() {
-      const image = this.item.broadcast.image
-        ? this.item.broadcast.image
-        : require('../../../assets/images/default_actual_broadcast.jpg')
+      // const defaultImage = require('../../../assets/images/default_actual_broadcast.jpg')
+      if (this.isPlaceholder || !this.item) {
+        return {}
+        // return { backgroundImage: `url('${defaultImage}')` }
+      }
+      const image = this.item.broadcast.image ? this.item.broadcast.image : null
       return { backgroundImage: `url('${image}')` }
     },
 
     linkToBroadCast() {
+      if (this.isPlaceholder) {
+        return null
+      }
       return `/broadcast/${this.item.broadcast.id}`
     },
   },
@@ -77,8 +120,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    width: 100%;
-    height: 150px;
+    //height: 150px;
     position: relative;
     padding: 0 10px;
     overflow: hidden;
@@ -118,7 +160,6 @@ export default {
     justify-content: center;
 
     & > img {
-      height: 50px;
       transition: 0.3s;
       width: calc((100% - 50px) / 2);
       object-fit: contain;

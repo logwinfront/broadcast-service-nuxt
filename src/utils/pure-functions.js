@@ -16,7 +16,11 @@ export const timestampToApiFormat = (date) => {
   return `${year}-${month}-${day}T00:00:00+03:00`
 }
 
-export const getDateParams = (timestamp) => {
+export const getDateParams = (
+  timestamp,
+  from = 'datetime_start__gte',
+  to = 'datetime_start__lt'
+) => {
   const firstDate = new Date(timestamp)
 
   const dateForApiFrom = timestampToApiFormat(firstDate)
@@ -25,7 +29,7 @@ export const getDateParams = (timestamp) => {
   )
 
   return {
-    datetime_start__gte: dateForApiFrom,
-    datetime_start__lt: dateForApiTo,
+    [from]: dateForApiFrom,
+    [to]: dateForApiTo,
   }
 }

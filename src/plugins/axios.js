@@ -4,6 +4,8 @@ export let api
 export default function ({ $axios, redirect }) {
   api = $axios
 
+  $axios.defaults.timeout = 8000
+
   if (process.client) {
     $axios.setBaseURL('/api')
   }
@@ -18,6 +20,7 @@ export default function ({ $axios, redirect }) {
   })
 
   $axios.onError((error) => {
+    console.log(error)
     const code = parseInt(error.response && error.response.status)
     if (code === 400) {
       redirect('/400')

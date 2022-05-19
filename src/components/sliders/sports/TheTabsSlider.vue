@@ -1,15 +1,28 @@
 <template>
-  <client-only>
-    <swiper :options="swiperOptions">
-      <TheTabsSliderItem
-        v-for="(tab, idx) in tabs"
-        :key="`tab-${idx}`"
-        :tab="tab"
-        :is-active="tab.slug === activeTab"
-        @click="changeTab"
-      />
-    </swiper>
-  </client-only>
+  <div>
+    <client-only>
+      <template #placeholder>
+        <div class="flex gap-2.5 overflow-hidden">
+          <TheTabsSliderItem
+            v-for="(tab, idx) in tabs"
+            :key="`tab1-${idx}`"
+            class="flex-shrink-0"
+            :is-active="tab.slug === activeTab"
+            :tab="tab"
+          />
+        </div>
+      </template>
+      <swiper :options="swiperOptions">
+        <TheTabsSliderItem
+          v-for="(tab, idx) in tabs"
+          :key="`tab-${idx}`"
+          :tab="tab"
+          :is-active="tab.slug === activeTab"
+          @click="changeTab"
+        />
+      </swiper>
+    </client-only>
+  </div>
 </template>
 
 <script>

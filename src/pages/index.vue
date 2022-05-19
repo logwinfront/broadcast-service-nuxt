@@ -27,9 +27,12 @@
         :count="broadcastsListTotal"
         :page="page"
         :loading="loading.broadcasts"
+        class="mb-8"
         @show-prev="page--"
         @show-next="page++"
       />
+
+      <TheNewsSlider :items="news" />
     </div>
 
     <div></div>
@@ -45,10 +48,12 @@ import TheTabsSlider from '~/src/components/sliders/sports/TheTabsSlider'
 import { getDateParams } from '~/src/utils/pure-functions'
 import TheBroadcastsTable from '~/src/components/table/TheBroadcastsTable'
 import { BROADCAST_PER_PAGE } from '~/src/utils/config'
+import TheNewsSlider from '~/src/components/sliders/news/TheNewsSlider'
 
 export default {
   name: 'IndexPage',
   components: {
+    TheNewsSlider,
     TheBroadcastsTable,
     TheTabsSlider,
     TheDateSlider,
@@ -58,6 +63,7 @@ export default {
   data() {
     return {
       currentDate: new Date(new Date().setUTCHours(0, 0, 0, 0)).getTime(),
+      news: [],
       mainSlider: [],
       actualBroadcasts: [],
       broadcasts: {},
@@ -71,15 +77,34 @@ export default {
   },
   async fetch() {
     const getSlides = async (params) => {
+      if (this.$store.getters['main/getSliderLoaded'](params.slider__code)) {
+        return this.$store.getters['main/getSliderList'](params.slider__code)
+      }
       const response = await ApiService.slider.getItems(params).catch((e) => {})
-      return response?.data?.results ?? []
+      const data = response?.data?.results ?? []
+      await this.$store.dispatch('main/updateSlider', {
+        [params.slider__code]: { data, loaded: true },
+      })
+      return data
+    }
+
+    const getNews = async () => {
+      // if  (this.$store.getters["main/getSliderLoaded"](params.slider__code)) {
+      //   return this.$store.getters["main/getSliderList"](params.slider__code)
+      // }
+      const response = await ApiService.news
+        .list({ page_size: 10 })
+        .catch((e) => {})
+      const data = response?.data?.results ?? []
+      // await this.$store.dispatch('main/updateSlider', { [params.slider__code]: { data, loaded: true }})
+      this.news = data
     }
 
     const mainSlider = async () => {
       this.mainSlider = await getSlides({
         active: true,
         slider__code: 'main',
-        page_size: 50,
+        page_size: 20,
       })
     }
 
@@ -96,7 +121,20 @@ export default {
       actualBroadcasts(),
       this.getSports(),
       this.getBroadcasts(),
+      getNews(),
     ])
+  },
+  head() {
+    return {
+      title: this.$t('seo.home.title'),
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.$t('seo.home.description'),
+        },
+      ],
+    }
   },
 
   computed: {

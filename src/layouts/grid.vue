@@ -76,6 +76,7 @@ export default {
       'content sidebar';
 
     &-sidebar {
+      display: block;
       grid-area: sidebar;
 
       &__item {

@@ -28,6 +28,18 @@ export default {
       type: Number,
       default: new Date(new Date().setUTCHours(0, 0, 0, 0)).getTime(),
     },
+    broadcastsProp: {
+      type: Array,
+      default: null,
+    },
+    broadcastsTotalProp: {
+      type: Number,
+      default: null,
+    },
+    updateFromParent: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -39,14 +51,23 @@ export default {
     }
   },
   async fetch() {
+    if (this.broadcastsProp) {
+      return
+    }
     await this.getBroadcasts()
   },
   computed: {
     broadcastsList() {
+      if (this.broadcastsProp) {
+        return this.broadcastsProp
+      }
       return this.broadcasts?.results ?? []
     },
 
     broadcastsListTotal() {
+      if (this.broadcastsTotalProp) {
+        return this.broadcastsTotalProp
+      }
       return this.broadcasts?.count ?? 0
     },
 
@@ -83,6 +104,9 @@ export default {
       this.getBroadcasts()
     },
     currentDate() {
+      if (!this.updateFromParent) {
+        return
+      }
       this.page = 1
       this.getBroadcasts()
     },

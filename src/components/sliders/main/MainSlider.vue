@@ -1,11 +1,22 @@
 <template>
-  <client-only>
-    <swiper :navigation="true" :options="swiperOptions" class="main-slider">
-      <swiper-slide v-for="item in slides" :key="`slide-${item.id}`">
-        <MainSliderItem :slide="item" />
-      </swiper-slide>
-    </swiper>
-  </client-only>
+  <div>
+    <client-only>
+      <template #placeholder>
+        <div class="main-slider--placeholder mx-auto">
+          <MainSliderItem v-if="slides.length" :slide="slides[0]" />
+          <MainSliderItem v-else :slide="null" is-placeholder />
+        </div>
+      </template>
+      <div v-if="!slides.length" class="main-slider--placeholder mx-auto">
+        <MainSliderItem :slide="null" is-placeholder />
+      </div>
+      <swiper :navigation="true" :options="swiperOptions" class="main-slider">
+        <swiper-slide v-for="item in slides" :key="`slide-${item.id}`">
+          <MainSliderItem :slide="item" />
+        </swiper-slide>
+      </swiper>
+    </client-only>
+  </div>
 </template>
 
 <script>
@@ -23,14 +34,13 @@ export default {
   data() {
     return {
       swiperOptions: {
+        autoUpdate: true,
+        observer: true,
+        observeParents: true,
         loop: true,
-        // freeMode: {
-        //   enabled: true,
-        //   sticky: true,
-        // },
-        // freeModeSticky: true,
+        // cssMode: true,
         slidesPerView: 'auto',
-        centeredSlides: true,
+        // centeredSlides: true,
         spaceBetween: 20,
         navigation: {
           nextEl: '.bl-casino__slider-nav--right',
@@ -60,9 +70,16 @@ export default {
 </script>
 
 <style lang="scss">
+$main-slider-width: 1240px;
+
 .main-slider {
-  .swiper-slide {
-    width: 1240px;
+  .swiper-wrapper {
+    width: $main-slider-width !important;
+    margin: 0 auto;
   }
+}
+
+.main-slider--placeholder {
+  width: $main-slider-width;
 }
 </style>

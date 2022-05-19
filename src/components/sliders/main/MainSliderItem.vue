@@ -1,14 +1,30 @@
 <template>
-  <div class="the-banner-item--wrapper rounded-lg">
+  <div
+    class="the-banner-item--wrapper rounded-md overflow-hidden relative px-4 bg-primary"
+  >
     <div class="slider-stub"></div>
-    <img class="the-banner-item__bg-image" :src="slide.image" alt="" />
+    <div
+      v-if="image"
+      class="the-banner-item__bg-image absolute inset-0 bg-cover bg-center"
+      :style="imageStyle"
+    />
     <div class="the-banner-item-info">
-      <p class="the-banner-item__title">{{ title }}</p>
-      <p class="the-banner-item__subtitle">{{ slide.sub_title }}</p>
+      <template v-if="!isPlaceholder">
+        <p class="the-banner-item__title">{{ title }}</p>
+        <p v-if="subTitle" class="the-banner-item__subtitle">{{ subTitle }}</p>
 
-      <TheButton :to="link" class="bg-secondary hover:bg-secondary-400" small>
-        {{ linkText }}
-      </TheButton>
+        <TheButton
+          :to="localePath(link)"
+          class="bg-secondary hover:bg-secondary-400"
+          small
+        >
+          {{ linkText }}
+        </TheButton>
+      </template>
+      <template v-else>
+        <div class="animate-pulse h-16 w-72 bg-primary rounded mb-2.5"></div>
+        <div class="animate-pulse h-9 w-56 bg-secondary rounded"></div>
+      </template>
     </div>
   </div>
 </template>
@@ -21,17 +37,38 @@ export default {
   props: {
     slide: {
       type: Object,
-      required: true,
+      default: null,
+    },
+    isPlaceholder: {
+      type: Boolean,
+      default: false,
     },
   },
 
   computed: {
+    image() {
+      if (this.isPlaceholder) {
+        return null
+      }
+      return this.slide?.image
+    },
+
+    imageStyle() {
+      if (!this.image) {
+        return {}
+      }
+      return { backgroundImage: `url('${this.image}')` }
+    },
+
     hasBroadCast() {
-      return !!this.slide.broadcast
+      return !!this.slide?.broadcast
     },
 
     title() {
-      if (this.slide.title) {
+      if (this.isPlaceholder) {
+        return null
+      }
+      if (this.slide?.title) {
         return this.slide.title
       }
 
@@ -42,28 +79,38 @@ export default {
       return null
     },
 
+    subTitle() {
+      if (this.isPlaceholder) {
+        return null
+      }
+      return this.slide?.sub_title
+    },
+
     link() {
-      if (this.slide.link) {
+      if (this.slide?.link) {
         return this.slide.link
       }
 
       if (this.hasBroadCast) {
-        return { name: 'broadcast', params: { slug: this.slide.broadcast.id } }
+        return `/broadcast/${this.slide.broadcast.id}`
       }
 
       return null
     },
 
     linkText() {
-      if (this.slide.link_text) {
+      if (this.isPlaceholder) {
+        return null
+      }
+      if (this.slide?.link_text) {
         return this.slide.link_text
       }
 
       if (this.hasBroadCast) {
-        return 'Смотреть трансляцию'
+        return this.$t('watchBroadcast')
       }
 
-      return 'Подробнее'
+      return this.$t('details')
     },
   },
 }
@@ -73,14 +120,6 @@ export default {
 .the-banner-item {
   &--wrapper {
     height: 520px;
-    //width: 1240px !important;
-    width: 100%;
-    padding: 0 15px;
-    position: relative;
-    //width: 100%;
-    //height: 100%;
-    //border-radius: $border-radius * 3;
-    overflow: hidden;
 
     &:before {
       position: absolute;
@@ -108,13 +147,6 @@ export default {
   }
 
   &__bg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center bottom;
     transition: opacity 0.5s ease 0.2s;
     z-index: -1;
   }

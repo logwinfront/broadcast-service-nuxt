@@ -2,15 +2,37 @@
   <div class="the-broadcast-slider">
     <h2 v-if="title" class="the-broadcast-slider__title">{{ title }}</h2>
 
-    <swiper :options="sliderOptions">
-      <swiper-slide
-        v-for="item in items"
-        :key="`slide-${item.id}`"
-        class="the-broadcast-item"
-      >
-        <TheBroadCastSliderItem :item="item" />
-      </swiper-slide>
-    </swiper>
+    <client-only>
+      <template #placeholder>
+        <div class="flex gap-5 overflow-hidden">
+          <TheBroadCastSliderItem
+            v-for="item in items"
+            :key="`slide-skeleton-${item.id}`"
+            class="flex-shrink-0 the-broadcast-item-placeholder"
+            :item="item"
+          />
+        </div>
+      </template>
+
+      <div v-if="!items.length" class="flex gap-5 overflow-hidden">
+        <TheBroadCastSliderItem
+          v-for="item in 4"
+          :key="`slide-skeleton-${item}`"
+          is-placeholder
+          class="flex-shrink-0 the-broadcast-item-placeholder"
+          :item="null"
+        />
+      </div>
+      <swiper v-else :options="sliderOptions">
+        <swiper-slide
+          v-for="item in items"
+          :key="`slide-${item.id}`"
+          class="the-broadcast-item"
+        >
+          <TheBroadCastSliderItem :item="item" />
+        </swiper-slide>
+      </swiper>
+    </client-only>
   </div>
 </template>
 
@@ -46,6 +68,10 @@ export default {
 </script>
 
 <style lang="scss">
+.the-broadcast-item-placeholder {
+  width: calc(25% - 15px);
+}
+
 .the-broadcast-slider {
   &__title {
     color: #fff;

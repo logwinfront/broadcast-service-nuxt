@@ -13,10 +13,15 @@ export default {
   broadcasts: {
     list: (params) => api.get('/v1/broadcast/list/', { params }),
     item: (id) => api.get(`/v1/broadcast/${id}/`),
+    listBySport: (params) => api.get(`/v1/broadcast/tournament/`, { params }),
   },
 
   tournament: {
     list: (params) => api.get('/v1/broadcast/tournament/list/', { params }),
+  },
+
+  news: {
+    list: (params) => api.get(`/v1/news/list/`, { params }),
   },
 }
 //

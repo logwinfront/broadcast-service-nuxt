@@ -22,7 +22,7 @@
       />
 
       <div
-        v-if="loading.broadcasts"
+        v-if="loading.tournaments"
         class="bg-primary flex justify-center rounded absolute inset-0 z-10"
         :class="{
           'bg-opacity-50 pt-20': tournaments.length,
@@ -36,8 +36,10 @@
 
       <TheTranslationsWrapper
         v-for="tournament in tournaments"
-        :key="tournament.id"
+        :key="tournament.slug"
         :tournament="tournament"
+        :broadcasts-prop="tournament.broadcasts.results"
+        :broadcasts-total-prop="tournament.broadcasts.count"
         class="mb-4"
       >
         <template #table="scope">
@@ -83,7 +85,7 @@ export default {
       tournaments: [],
       sport: null,
       loading: {
-        broadcasts: false,
+        tournaments: false,
         sport: false,
       },
       init: false,
@@ -103,12 +105,16 @@ export default {
       return [{ name: this.$t('home'), link: '/' }, { name: this.sport?.name }]
     },
     dateParamsForAPI() {
-      return getDateParams(this.currentDate)
+      return getDateParams(
+        this.currentDate,
+        'broadcast__datetime_start__gte',
+        'broadcast__datetime_start__lt'
+      )
     },
     params() {
       return {
         ...this.dateParamsForAPI,
-        page_size: 50,
+        page: 10,
         sport__slug: this.$route.params.sport,
       }
     },
@@ -126,13 +132,13 @@ export default {
       this.currentDate = val
     },
     async getTournaments() {
-      this.loading.broadcasts = true
-      const response = await ApiService.tournament
-        .list(this.params)
+      this.loading.tournaments = true
+      const response = await ApiService.broadcasts
+        .listBySport(this.params)
         .catch((e) => {})
 
-      this.tournaments = (response?.data ?? []).map((item) => item.tournament)
-      this.loading.broadcasts = false
+      this.tournaments = response?.data ?? []
+      this.loading.tournaments = false
     },
     async getSportInfo() {
       this.loading.sport = true
