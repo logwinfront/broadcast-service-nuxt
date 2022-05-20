@@ -92,9 +92,14 @@ export default {
     }
   },
   async fetch() {
-    // await this.getTournaments()
-    // await this.getSportInfo()
-    await Promise.all([this.getTournaments(), this.getSportInfo()])
+    await Promise.all([this.getTournaments(), this.getSportInfo()]).catch(
+      (e) => {
+        this.$nuxt.error({
+          statusCode: 404,
+          message: this.$t('errors.pageNotFound'),
+        })
+      }
+    )
     this.init = true
   },
   computed: {
@@ -114,7 +119,7 @@ export default {
     params() {
       return {
         ...this.dateParamsForAPI,
-        page: 10,
+        page_size: 10,
         sport__slug: this.$route.params.sport,
       }
     },
@@ -133,18 +138,14 @@ export default {
     },
     async getTournaments() {
       this.loading.tournaments = true
-      const response = await ApiService.broadcasts
-        .listBySport(this.params)
-        .catch((e) => {})
+      const response = await ApiService.broadcasts.listBySport(this.params)
 
       this.tournaments = response?.data ?? []
       this.loading.tournaments = false
     },
     async getSportInfo() {
       this.loading.sport = true
-      const response = await ApiService.sport
-        .item(this.$route.params.sport)
-        .catch((e) => {})
+      const response = await ApiService.sport.item(this.$route.params.sport)
       this.sport = response?.data ?? null
       this.loading.sport = false
     },

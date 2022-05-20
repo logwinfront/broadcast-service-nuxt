@@ -2,7 +2,7 @@
   <div>
     <MainSlider class="mt-3" :slides="mainSlider" />
 
-    <div class="lg:container px-2.5 mx-auto mb-40">
+    <div class="lg:container px-2.5 mx-auto mb-20">
       <TheBroadCastSlider
         class="pt-7 pb-4"
         :items="actualBroadcasts"
@@ -27,15 +27,13 @@
         :count="broadcastsListTotal"
         :page="page"
         :loading="loading.broadcasts"
-        class="mb-8"
+        class="mb-12"
         @show-prev="page--"
         @show-next="page++"
       />
 
       <TheNewsSlider :items="news" />
     </div>
-
-    <div></div>
   </div>
 </template>
 
@@ -89,14 +87,18 @@ export default {
     }
 
     const getNews = async () => {
-      // if  (this.$store.getters["main/getSliderLoaded"](params.slider__code)) {
-      //   return this.$store.getters["main/getSliderList"](params.slider__code)
-      // }
+      if (this.$store.getters['news/getNewsLoaded']) {
+        this.news = this.$store.getters['news/getNewsList']
+        return
+      }
       const response = await ApiService.news
         .list({ page_size: 10 })
         .catch((e) => {})
       const data = response?.data?.results ?? []
-      // await this.$store.dispatch('main/updateSlider', { [params.slider__code]: { data, loaded: true }})
+      await this.$store.dispatch('news/setNewsInit', {
+        data: response?.data,
+        loaded: true,
+      })
       this.news = data
     }
 

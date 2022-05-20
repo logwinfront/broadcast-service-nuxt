@@ -4,17 +4,17 @@
       class="news-slider-item--wrapper bg-primary rounded-lg rounded-br-none hover:bg-opacity-80"
     >
       <template v-if="item">
-        <div class="news-slider-item__text">
+        <nuxt-link class="news-slider-item__text" :to="localePath(newsLink)">
           <div
-            class="news-slider-item__title text-white ellipsis-3-lines font-bold"
+            class="news-slider-item__title text-white ellipsis-3-lines font-bold line-clamp-2"
             :title="item.name"
           >
             {{ item.name }}
           </div>
-          <div class="news-slider-item__desc text-gray ellipsis-3-lines">
+          <div class="news-slider-item__desc text-gray line-clamp-3">
             {{ item.short_description }}
           </div>
-        </div>
+        </nuxt-link>
         <div
           class="news-slider-item__image bg-primary-400 rounded overflow-hidden"
         >
@@ -65,6 +65,10 @@ export default {
         }
       }
       return null
+    },
+
+    newsLink() {
+      return `/news/${this.item.slug}`
     },
   },
 }

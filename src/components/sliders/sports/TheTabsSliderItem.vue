@@ -1,5 +1,5 @@
 <template>
-  <swiper-slide class="tab-slider-item">
+  <component :is="component" class="tab-slider-item">
     <div
       class="h-24 rounded flex flex-col items-center justify-center px-4 py-2 hover:bg-primary-400 cursor-pointer"
       :class="[isActive ? 'bg-primary-400' : 'bg-primary']"
@@ -10,7 +10,7 @@
         {{ tab.name }}
       </div>
     </div>
-  </swiper-slide>
+  </component>
 </template>
 
 <script>
@@ -24,6 +24,15 @@ export default {
     isActive: {
       type: Boolean,
       default: false,
+    },
+    isPlaceholder: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    component() {
+      return this.isPlaceholder ? 'div' : 'swiper-slide'
     },
   },
 }

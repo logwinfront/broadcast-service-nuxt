@@ -79,7 +79,11 @@ module.exports = {
       max: 99999999,
     },
   },
+  corePlugins: {
+    aspectRatio: false,
+  },
   plugins: [
-    // require('@tailwindcss/aspect-ratio')
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/line-clamp'),
   ],
 }

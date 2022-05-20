@@ -8,6 +8,7 @@
             :key="`tab1-${idx}`"
             class="flex-shrink-0"
             :is-active="tab.slug === activeTab"
+            is-placeholder
             :tab="tab"
           />
         </div>

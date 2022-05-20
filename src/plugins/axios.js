@@ -4,7 +4,7 @@ export let api
 export default function ({ $axios, redirect }) {
   api = $axios
 
-  $axios.defaults.timeout = 8000
+  $axios.defaults.timeout = 15000
 
   if (process.client) {
     $axios.setBaseURL('/api')

@@ -54,9 +54,16 @@ export default {
     }
   },
   async fetch() {
-    // await this.getSportInfo()
-    // await this.getTournamentInfo()
-    await Promise.all([this.getSportInfo(), this.getTournamentInfo()])
+    console.log('tournament fetch')
+    await Promise.all([this.getSportInfo(), this.getTournamentInfo()]).catch(
+      (e) => {
+        console.log('error')
+        this.$nuxt.error({
+          statusCode: 404,
+          message: this.$t('errors.pageNotFound'),
+        })
+      }
+    )
   },
   computed: {
     breadcrumbsTitle() {
@@ -76,16 +83,18 @@ export default {
     },
     async getTournamentInfo() {
       this.loading.tournament = true
-      const response = await ApiService.tournament
-        .list({ tournament__slug: this.$route.params.tournament })
-        .catch((e) => {})
-      this.tournament = response?.data?.[0]?.tournament ?? null
+      const response = await ApiService.tournament.list({
+        tournament__slug: this.$route.params.tournament,
+      })
+      const tournamentData = response?.data?.[0]?.tournament ?? null
+      if (!tournamentData) {
+        throw new Error(this.$t('errors.pageNotFound'))
+      }
+      this.tournament = tournamentData
       this.loading.tournament = false
     },
     async getSportInfo() {
-      const response = await ApiService.sport
-        .item(this.$route.params.sport)
-        .catch((e) => {})
+      const response = await ApiService.sport.item(this.$route.params.sport)
       this.sport = response?.data ?? null
     },
   },

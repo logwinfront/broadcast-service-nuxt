@@ -44,21 +44,33 @@ export default {
   name: 'BroadCastPage',
   components: { TheBreadcrumbs },
   layout: 'grid',
+  async asyncData({ params, error, app }) {
+    const response = await ApiService.broadcasts.item(params.id).catch((e) => {
+      error({ statusCode: 404, message: app.i18n.t('errors.pageNotFound') })
+    })
+
+    const broadcast = response?.data ?? null
+    if (broadcast) {
+      return { broadcast }
+    }
+
+    error({ statusCode: 404, message: app.i18n.t('errors.pageNotFound') })
+  },
   data() {
     return {
-      broadcast: null,
+      // broadcast: null,
       loading: {
         broadcast: true,
       },
     }
   },
-  async fetch() {
-    await Promise.all([this.getBroadcast()]).catch((e) => {
-      if (process.server) {
-        this.$nuxt.context.res.statusCode = 404
-      }
-    })
-  },
+  // async fetch() {
+  //   await Promise.all([this.getBroadcast()]).catch((e) => {
+  //     if (process.server) {
+  //       this.$nuxt.context.res.statusCode = 404
+  //     }
+  //   })
+  // },
   computed: {
     broadcastLink() {
       return this.broadcast?.broadcast_embeded

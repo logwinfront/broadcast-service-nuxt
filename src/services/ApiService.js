@@ -21,7 +21,8 @@ export default {
   },
 
   news: {
-    list: (params) => api.get(`/v1/news/list/`, { params }),
+    list: (params) => api.get(`/v1/news/`, { params }),
+    item: (slug) => api.get(`/v1/news/${slug}`),
   },
 }
 //

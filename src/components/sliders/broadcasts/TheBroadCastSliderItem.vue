@@ -56,7 +56,9 @@
 <script>
 import { format, isToday, isTomorrow } from 'date-fns'
 import { Icon } from '@iconify/vue2'
+import { ru, enGB } from 'date-fns/locale'
 import TheImg from '~/src/components/ui/TheImg'
+const locales = { ru, enGB }
 
 export default {
   name: 'TheBroadCastSliderItem',
@@ -78,6 +80,11 @@ export default {
       }
       return 'nuxt-link'
     },
+    localeOptions() {
+      return {
+        locale: locales[this.$i18n.localeProperties.dateFnsCode],
+      }
+    },
     startBroadcastDate() {
       const dateStart = new Date(this.item.broadcast.datetime_start)
 
@@ -92,12 +99,13 @@ export default {
     },
 
     styles() {
-      // const defaultImage = require('../../../assets/images/default_actual_broadcast.jpg')
-      if (this.isPlaceholder || !this.item) {
+      const image = this.item?.broadcast?.image
+        ? this.item?.broadcast?.image
+        : null
+      if (this.isPlaceholder || !image) {
         return {}
-        // return { backgroundImage: `url('${defaultImage}')` }
       }
-      const image = this.item.broadcast.image ? this.item.broadcast.image : null
+
       return { backgroundImage: `url('${image}')` }
     },
 

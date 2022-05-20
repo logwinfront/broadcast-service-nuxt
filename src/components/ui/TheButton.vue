@@ -15,7 +15,11 @@
   >
     <div
       v-if="loading"
-      class="w-5 h-5 lg:w-8 lg:h-8 border-b-2 border-gray-900 rounded-full animate-spin absolute"
+      class="border-b-2 border-gray-900 rounded-full animate-spin absolute"
+      :class="{
+        'w-4 h-4 lg:w-6 lg:h-6': small,
+        'w-5 h-5 lg:w-8 lg:h-8': !small,
+      }"
     ></div>
     <span class="app-button__body">
       <slot />

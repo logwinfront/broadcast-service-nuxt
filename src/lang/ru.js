@@ -17,4 +17,9 @@ export default {
   },
   watchBroadcast: 'Смотреть трансляцию',
   details: 'Подробнее',
+  showMore: 'Показать еще',
+  views: 'Просмотры',
+  errors: {
+    pageNotFound: 'Страница не найдена',
+  },
 }

@@ -138,6 +138,11 @@ export default {
     },
   },
 
+  transition: {
+    name: 'page',
+    mode: 'out-in',
+  },
+
   proxy: {
     '/api': {
       target: 'https://api.sportefir.com',
@@ -162,10 +167,11 @@ export default {
   router: {
     middleware: [],
     prefetchLinks: false,
+    prefetchPayloads: false,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ['vue-agile'],
+    // transpile: ['vue-agile'],
   },
 }

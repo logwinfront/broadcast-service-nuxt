@@ -28,7 +28,7 @@
       </div>
       <nuxt-link
         v-if="showTournament && tournamentName"
-        :to="tournamentLink"
+        :to="localePath(tournamentLink)"
         class="text-gray text-center text-xs"
         >{{ tournamentName }}</nuxt-link
       >
@@ -92,7 +92,7 @@ export default {
       return format(this.dateStartObject, 'EEEEEE dd.MM', this.localeOptions)
     },
     tournamentLink() {
-      return `/${this.broadcast.sport?.slug}/${this.broadcast.tournament?.slug}`
+      return `/${this.broadcast.sport?.slug}/${this.broadcast.tournament?.slug}32131`
     },
     tournamentName() {
       return this.broadcast?.tournament?.name

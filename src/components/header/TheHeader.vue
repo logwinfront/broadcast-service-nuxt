@@ -19,7 +19,7 @@
             <nuxt-link
               class="text-gray text-base font-semibold px-2.5"
               exact-active-class="text-white"
-              :to="link.to"
+              :to="localePath(link.to)"
             >
               {{ link.name }}
             </nuxt-link>
@@ -36,18 +36,8 @@ export default {
   computed: {
     navLinks() {
       return [
-        { name: 'Главная', to: { name: 'home' } },
-        // { name: 'Login', to: { name: 'login' }  },
-        {
-          name: 'Футбол',
-          to: { name: 'sport', params: { sport: 'football' } },
-        },
-        { name: 'Хоккей', to: { name: 'sport', params: { sport: 'hockey' } } },
-        {
-          name: 'Баскетбол',
-          to: { name: 'sport', params: { sport: 'basketball' } },
-        },
-        { name: 'Новости', to: { name: 'news' } },
+        { name: 'Главная', to: '/' },
+        { name: this.$t('news'), to: '/news' },
       ]
     },
   },

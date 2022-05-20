@@ -1,8 +1,8 @@
 <template>
   <div
-    class="the-banner-item--wrapper rounded-md overflow-hidden relative px-4 bg-primary"
+    class="the-banner-item--wrapper rounded-md overflow-hidden relative px-4"
   >
-    <div class="slider-stub"></div>
+    <div class="slider-stub bg-primary"></div>
     <div
       v-if="image"
       class="the-banner-item__bg-image absolute inset-0 bg-cover bg-center"
@@ -135,20 +135,20 @@ export default {
       );
       height: 200px;
     }
-  }
 
-  .slider-stub {
-    position: absolute;
-    top: 0;
-    z-index: -1;
-    &:after {
-      //background-color: $blue-darker;
+    .slider-stub {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      &:after {
+        //background-color: $blue-darker;
+      }
     }
   }
 
   &__bg-image {
     transition: opacity 0.5s ease 0.2s;
-    z-index: -1;
   }
 
   &-info {

@@ -2,7 +2,7 @@
   <div>
     <TheHeader />
 
-    <div class="grid-layout lg:container px-2.5 pt-4 mx-auto">
+    <div class="grid-layout lg:container px-2.5 pt-4 mx-auto mb-20">
       <div class="grid-layout-banner">
         <a href="#" target="_blank" class="grid-layout-banner__item">
           <img
@@ -25,14 +25,17 @@
         </a>
       </div>
     </div>
+
+    <TheFooter />
   </div>
 </template>
 
 <script>
 import TheHeader from '../components/header/TheHeader.vue'
+import TheFooter from '~/src/components/footer/TheFooter'
 export default {
   name: 'GridBroadcasts',
-  components: { TheHeader },
+  components: { TheFooter, TheHeader },
   layout: 'grid',
 }
 </script>
