@@ -26,8 +26,8 @@ export default {
   },
 
   article: {
-    list: (params) => api.get(`/v1/article/list/`, { params }),
-    item: (slug) => api.get(`/v1/article/${slug}`),
+    list: (params) => api.get(`/v1/articles/`, { params }),
+    item: (slug) => api.get(`/v1/articles/${slug}`),
   },
 }
 //

@@ -107,6 +107,15 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     '@nuxtjs/i18n',
+    '@nuxtjs/redirect-module',
+  ],
+
+  redirect: [
+    {
+      from: '^(\\/[^\\?]*[^\\/])(\\?.*)?$',
+      to: '$1/$2',
+      statusCode: 301,
+    },
   ],
 
   i18n: {

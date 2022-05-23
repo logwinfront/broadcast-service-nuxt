@@ -1,7 +1,7 @@
 <template>
   <div class="q-pb-md q-py-xl">
     <div class="seo-block">
-      <h2>
+      <h2 class="text-white text-lg lg:text-2xl font-bold mt-0 mb-1 lg:mb-4">
         Онлайн-кинотеатр ivi: фильмы в хорошем качестве всегда приносят
         настоящее удовольствие
       </h2>
@@ -98,14 +98,6 @@ export default {
 
 <style lang="scss">
 .seo-block {
-  h2 {
-    margin-top: 0;
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: 900;
-    font-style: normal;
-    color: #fff;
-  }
   p {
     font-size: 15px;
     line-height: 22px;
