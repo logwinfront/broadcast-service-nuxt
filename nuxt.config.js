@@ -8,11 +8,15 @@ export default {
     '~': resolve(__dirname, './'),
   },
 
+  env: {
+    baseApiUrl: process.env.BASE_API_URL,
+  },
+
   srcDir: 'src/',
 
   server: {
     host: '0.0.0.0',
-    port: 3010, // default: 3000
+    port: 8090, // default: 3000
   },
 
   telemetry: false,
@@ -145,7 +149,7 @@ export default {
 
   proxy: {
     '/api': {
-      target: 'https://api.sportefir.com',
+      target: 'http://192.168.60.171:8000',
       changeOrigin: true,
       logLevel: 'info',
       headers: {
@@ -154,7 +158,7 @@ export default {
       // pathRewrite: { '^/api/': '' },
     },
     '/media': {
-      target: 'https://api.sportefir.com',
+      target: 'http://192.168.60.171:8000',
       changeOrigin: true,
       logLevel: 'info',
       headers: {

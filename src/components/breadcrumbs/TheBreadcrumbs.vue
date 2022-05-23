@@ -1,9 +1,9 @@
 <template>
-  <div class="breadcrumbs-block p-4 rounded bg-primary flex">
+  <div class="breadcrumbs-block p-3 md:p-4 rounded bg-primary flex">
     <div v-if="logo" class="breadcrumbs-block__logo mr-6">
       <img class="w-full" :src="logo" :alt="title" />
     </div>
-    <div class="breadcrumbs-block__content">
+    <div class="breadcrumbs-block__content w-full">
       <div>
         <ul
           v-if="breadcrumbs.length"
@@ -23,7 +23,7 @@
             <li
               v-for="(breadcrumb, idx) in breadcrumbs"
               :key="`breadcrumb-${idx}`"
-              class="font-semibold leading-4 pb-0.5"
+              class="text-sm md:text-base font-semibold leading-4 pb-0.5"
             >
               <nuxt-link
                 v-if="breadcrumb.link"
@@ -41,7 +41,7 @@
           <div v-if="loading" class="h-5 w-24 bg-primary-400 rounded"></div>
           <h1
             v-else
-            class="leading-none text-white mt-0 font-semibold text-2xl"
+            class="leading-none text-white mt-0 font-semibold text-lg md:text-2xl"
           >
             {{ title }}
           </h1>

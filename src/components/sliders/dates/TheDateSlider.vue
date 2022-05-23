@@ -1,7 +1,7 @@
 <template>
   <div class="text-white date-slider flex items-end">
     <button
-      class="text-3xl date-slider--prev h-14 w-14 border-primary border-2 rounded flex items-center justify-center"
+      class="invisible lg:visible text-3xl date-slider--prev h-14 w-14 border-primary border-2 rounded flex items-center justify-center"
       :class="[page === 0 ? 'text-gray cursor-not-allowed' : 'text-white']"
     >
       <client-only>
@@ -72,7 +72,7 @@
       </swiper>
     </client-only>
     <button
-      class="text-3xl text-white date-slider--next h-14 w-14 border-primary border-2 rounded flex items-center justify-center"
+      class="invisible lg:visible text-3xl text-white date-slider--next h-14 w-14 border-primary border-2 rounded flex items-center justify-center"
     >
       <client-only>
         <Icon icon="ph:caret-right-light" />
@@ -205,8 +205,6 @@ export default {
 .date-slider {
   .swiper-container {
     width: 620px !important;
-    margin-left: 10px;
-    margin-right: 10px;
   }
 
   &__arrows {
@@ -277,6 +275,15 @@ export default {
 
     &--weekend {
       //color: $primary;
+    }
+  }
+}
+
+@media (min-width: 1400px) {
+  .date-slider {
+    .swiper-container {
+      margin-left: 10px;
+      margin-right: 10px;
     }
   }
 }

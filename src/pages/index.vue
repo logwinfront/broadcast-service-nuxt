@@ -2,21 +2,21 @@
   <div>
     <MainSlider class="mt-3" :slides="mainSlider" />
 
-    <div class="lg:container px-2.5 mx-auto mb-20">
+    <div class="lg:container px-4 lg:px-3 mx-auto mb-6 lg:mb-20">
       <TheBroadCastSlider
-        class="pt-7 pb-4"
+        class="pt-4 lg:pt-7 pb-2 lg:pb-4"
         :items="actualBroadcasts"
         :title="$t('actualBroadcasts')"
       />
 
       <TheDateSlider
-        class="mb-8"
+        class="mb-4 lg:mb-8"
         :now-date="currentDate"
         @changeSelectedDate="updateCurrentDate"
       />
 
       <TheTabsSlider
-        class="mb-8"
+        class="mb-5 lg:mb-8"
         :tabs="sportTabsForSlider"
         :active-tab="activeTab"
         @change-tab="changeTab"
@@ -27,12 +27,16 @@
         :count="broadcastsListTotal"
         :page="page"
         :loading="loading.broadcasts"
-        class="mb-12"
+        class="mb-4 lg:mb-12"
         @show-prev="page--"
         @show-next="page++"
       />
 
-      <TheNewsSlider :items="news" />
+      <TheNewsSlider :items="news" class="mb-10" />
+
+      <TheHomeSeoBlock class="mb-10" />
+
+      <TheArticlesSlider :items="articles" />
     </div>
   </div>
 </template>
@@ -45,12 +49,16 @@ import TheDateSlider from '~/src/components/sliders/dates/TheDateSlider'
 import TheTabsSlider from '~/src/components/sliders/sports/TheTabsSlider'
 import { getDateParams } from '~/src/utils/pure-functions'
 import TheBroadcastsTable from '~/src/components/table/TheBroadcastsTable'
-import { BROADCAST_PER_PAGE } from '~/src/utils/config'
+import { BROADCAST_PER_PAGE, NEWS_PER_PAGE } from '~/src/utils/config'
 import TheNewsSlider from '~/src/components/sliders/news/TheNewsSlider'
+import TheArticlesSlider from '~/src/components/sliders/articles/TheArticlesSlider'
+import TheHomeSeoBlock from '~/src/components/content/TheHomeSeoBlock'
 
 export default {
   name: 'IndexPage',
   components: {
+    TheHomeSeoBlock,
+    TheArticlesSlider,
     TheNewsSlider,
     TheBroadcastsTable,
     TheTabsSlider,
@@ -62,6 +70,7 @@ export default {
     return {
       currentDate: new Date(new Date().setUTCHours(0, 0, 0, 0)).getTime(),
       news: [],
+      articles: [],
       mainSlider: [],
       actualBroadcasts: [],
       broadcasts: {},
@@ -92,7 +101,7 @@ export default {
         return
       }
       const response = await ApiService.news
-        .list({ page_size: 10 })
+        .list({ page_size: NEWS_PER_PAGE })
         .catch((e) => {})
       const data = response?.data?.results ?? []
       await this.$store.dispatch('news/setNewsInit', {
@@ -100,6 +109,22 @@ export default {
         loaded: true,
       })
       this.news = data
+    }
+
+    const getArticles = async () => {
+      if (this.$store.getters['articles/getArticlesLoaded']) {
+        this.news = this.$store.getters['articles/getArticlesList']
+        return
+      }
+      const response = await ApiService.article
+        .list({ page_size: NEWS_PER_PAGE })
+        .catch((e) => {})
+      const data = response?.data?.results ?? []
+      await this.$store.dispatch('articles/setArticlesInit', {
+        data: response?.data,
+        loaded: true,
+      })
+      this.articles = data
     }
 
     const mainSlider = async () => {
@@ -124,6 +149,7 @@ export default {
       this.getSports(),
       this.getBroadcasts(),
       getNews(),
+      getArticles(),
     ])
   },
   head() {

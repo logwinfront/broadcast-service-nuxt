@@ -1,7 +1,7 @@
 <template>
   <div class="news-slider-item">
     <div
-      class="news-slider-item--wrapper bg-primary rounded-lg rounded-br-none hover:bg-opacity-80"
+      class="news-slider-item--wrapper py-4 px-4 lg:px-5 bg-primary rounded-lg rounded-br-none hover:bg-opacity-80"
     >
       <template v-if="item">
         <nuxt-link class="news-slider-item__text" :to="localePath(newsLink)">
@@ -79,7 +79,6 @@ export default {
   padding-top: 20px;
   &--wrapper {
     height: 153px;
-    padding: 16px 20px;
     display: flex;
     justify-content: space-between;
 
@@ -118,13 +117,19 @@ export default {
   }
 }
 
-@media screen and (min-width: 600px) {
-  .news-slider-item__image {
-    width: 100px;
-    top: -30px;
-    height: calc(100% + 30px);
-  }
+.news-slider-item__image {
+  width: 100px;
+  top: -30px;
+  height: calc(100% + 30px);
 }
+
+//@media screen and (min-width: 600px) {
+//  .news-slider-item__image {
+//    width: 100px;
+//    top: -30px;
+//    height: calc(100% + 30px);
+//  }
+//}
 
 @media screen and (min-width: 600px) and (max-width: 879px) {
   .news-slider-item__title {

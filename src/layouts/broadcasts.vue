@@ -1,17 +1,17 @@
 <template>
   <div>
-    <TheHeader />
+    <TheHeaderWrapper />
     <Nuxt />
     <TheFooter />
   </div>
 </template>
 
 <script>
-import TheHeader from '../components/header/TheHeader.vue'
 import TheFooter from '~/src/components/footer/TheFooter'
+import TheHeaderWrapper from '~/src/components/header/TheHeaderWrapper'
 export default {
   name: 'LayoutBroadcasts',
-  components: { TheFooter, TheHeader },
+  components: { TheHeaderWrapper, TheFooter },
   layout: 'broadcasts',
 }
 </script>

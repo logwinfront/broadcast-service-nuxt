@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-primary rounded p-4 relative broadcast-table flex flex-col"
+    class="bg-primary rounded p-2 lg:p-4 relative broadcast-table flex flex-col"
     :class="{ 'broadcast-table--loaded': !loading }"
   >
     <div

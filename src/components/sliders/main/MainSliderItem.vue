@@ -8,14 +8,31 @@
       class="the-banner-item__bg-image absolute inset-0 bg-cover bg-center"
       :style="imageStyle"
     />
-    <div class="the-banner-item-info">
+
+    <!--    position: absolute;-->
+    <!--    left: 25px;-->
+    <!--    bottom: 25px;-->
+    <!--    color: #fff;-->
+    <!--    z-index: 1;-->
+
+    <div class="absolute left-3 lg:left-3 bottom-3 lg:bottom-3 text-white z-10">
       <template v-if="!isPlaceholder">
-        <p class="the-banner-item__title">{{ title }}</p>
-        <p v-if="subTitle" class="the-banner-item__subtitle">{{ subTitle }}</p>
+        <!--        margin-top: 0;-->
+        <!--        margin-bottom: 10px;-->
+        <!--        font-size: 46px;-->
+        <!--        font-weight: 700;-->
+
+        <p class="text-lg lg:text-2xl font-bold">
+          {{ title }}
+        </p>
+
+        <p v-if="subTitle" class="text-base lg:text-lg">
+          {{ subTitle }}
+        </p>
 
         <TheButton
           :to="localePath(link)"
-          class="bg-secondary hover:bg-secondary-400"
+          class="bg-secondary hover:bg-secondary-400 mt-3 lg:mt-4"
           small
         >
           {{ linkText }}
@@ -119,7 +136,7 @@ export default {
 <style lang="scss">
 .the-banner-item {
   &--wrapper {
-    height: 520px;
+    padding-bottom: 60%;
 
     &:before {
       position: absolute;
@@ -151,25 +168,33 @@ export default {
     transition: opacity 0.5s ease 0.2s;
   }
 
-  &-info {
-    position: absolute;
-    left: 25px;
-    bottom: 25px;
-    color: #fff;
-    z-index: 1;
-  }
+  //&-info {
+  //  position: absolute;
+  //  left: 25px;
+  //  bottom: 25px;
+  //  color: #fff;
+  //  z-index: 1;
+  //}
 
-  &__title {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 46px;
-    font-weight: 700;
-    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.4);
-  }
+  //&__title {
+  //  margin-top: 0;
+  //  margin-bottom: 10px;
+  //  font-size: 46px;
+  //  font-weight: 700;
+  //}
 
   &__subtitle {
     margin-bottom: 15px;
     font-size: 14px;
+  }
+}
+
+@media (min-width: 767px) {
+  .the-banner-item {
+    &--wrapper {
+      padding-bottom: 0;
+      height: 520px;
+    }
   }
 }
 </style>

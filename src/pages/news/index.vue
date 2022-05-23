@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <TheGridLayoutWrapper>
     <TheBreadcrumbs
       :breadcrumbs="breadcrumbs"
       :title="$t('news')"
@@ -13,7 +13,9 @@
       :loading="loading"
       @load-more="loadMore"
     />
-  </div>
+
+    <template #sidebar-banner> sidebar </template>
+  </TheGridLayoutWrapper>
 </template>
 
 <script>
@@ -21,10 +23,11 @@ import TheBreadcrumbs from '~/src/components/breadcrumbs/TheBreadcrumbs'
 import ApiService from '~/src/services/ApiService'
 import TheNewsList from '~/src/components/news/TheNewsList'
 import { NEWS_PER_PAGE } from '~/src/utils/config'
+import TheGridLayoutWrapper from '~/src/components/wrappers/TheGridLayoutWrapper'
 export default {
   name: 'NewsPageList',
-  components: { TheNewsList, TheBreadcrumbs },
-  layout: 'grid',
+  components: { TheGridLayoutWrapper, TheNewsList, TheBreadcrumbs },
+  // layout: 'grid',
   async asyncData({ store }) {
     if (store.getters['news/getNewsLoaded']) {
       const dataFromStore = store.getters['news/getNewsObject']
@@ -35,7 +38,7 @@ export default {
     }
 
     const response = await ApiService.news
-      .list({ page_size: 10 })
+      .list({ page_size: NEWS_PER_PAGE })
       .catch((e) => {})
 
     await store.dispatch('news/setNewsInit', {

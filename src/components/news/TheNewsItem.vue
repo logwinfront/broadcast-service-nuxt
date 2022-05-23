@@ -11,17 +11,17 @@
         {{ item.watch_counter }}
       </div>
       <div
-        class="absolute p-4 flex flex-col justify-end inset-0 bg-black bg-opacity-0 invisible transition-colors group-hover:bg-opacity-80 group-hover:visible z-20"
+        class="absolute p-2 md:p-4 flex flex-col justify-end inset-0 bg-black bg-opacity-0 invisible transition-colors group-hover:bg-opacity-80 group-hover:visible z-20"
       >
         <div
-          class="text-sm text-opacity-70 opacity-0 leading-tight line-clamp-4 transition group-hover:opacity-100"
+          class="text-xs md:text-sm text-opacity-70 opacity-0 leading-tight line-clamp-4 transition group-hover:opacity-100"
         >
           {{ item.short_description }}
         </div>
       </div>
     </div>
     <div
-      class="line-clamp-2 text-sm lg:text-base text-gray group-hover:text-white transition-colors font-semibold"
+      class="line-clamp-2 text-xs md:text-sm lg:text-base text-gray group-hover:text-white transition-colors font-semibold"
     >
       {{ item.name }}
     </div>

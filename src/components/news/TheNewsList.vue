@@ -1,12 +1,14 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-5">
+    <div
+      class="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-4 md:gap-x-4 md:gap-y-5"
+    >
       <TheNewsItem v-for="item in news" :key="`news-${item.id}`" :item="item" />
     </div>
 
     <TheButton
       v-if="hasNext"
-      class="bg-secondary mx-auto mt-12"
+      class="bg-secondary mx-auto mt-6 md:mt-12"
       small
       :loading="loading"
       @click="loadMore"

@@ -1,31 +1,35 @@
 <template>
-  <div>
-    <TheBreadcrumbs :breadcrumbs="breadcrumbs" :title="newsTitle" class="mb-4">
+  <TheGridLayoutWrapper>
+    <TheBreadcrumbs
+      :breadcrumbs="breadcrumbs"
+      :title="newsHeading"
+      class="mb-4"
+    >
       <template #footer>
         <div class="pt-2 flex items-center justify-between">
-          <div class="text-gray">{{ createdDate }}</div>
-          <div class="text-gray">
+          <div class="text-xs md:text-base text-gray">{{ createdDate }}</div>
+          <div class="text-xs md:text-base text-gray">
             {{ $t('views') }}: {{ news.watch_counter }}
           </div>
         </div>
       </template>
     </TheBreadcrumbs>
 
-    <div class="p-4 rounded bg-primary">
-      <!--      <div-->
-      <!--        v-if="imageStyle"-->
-      <!--        class="aspect-w-16 aspect-h-6 bg-cover rounded"-->
-      <!--        :style="imageStyle"-->
-      <!--      ></div>-->
+    <div class="p-3 md:p-4 rounded bg-primary">
       <img
         v-if="news.preview_image"
-        class="rounded w-full mb-10 select-none"
+        class="rounded w-full mb-4 md:mb-10 select-none"
         :src="news.preview_image"
         :alt="newsTitle"
       />
-      <div class="news-content" v-html="news.description"></div>
+      <div
+        class="news-content text-sm md:text-base"
+        v-html="news.description"
+      ></div>
     </div>
-  </div>
+
+    <template #sidebar-banner> sidebar </template>
+  </TheGridLayoutWrapper>
 </template>
 
 <script>
@@ -33,12 +37,13 @@ import { ru, enGB } from 'date-fns/locale'
 import { format } from 'date-fns'
 import TheBreadcrumbs from '~/src/components/breadcrumbs/TheBreadcrumbs'
 import ApiService from '~/src/services/ApiService'
+import TheGridLayoutWrapper from '~/src/components/wrappers/TheGridLayoutWrapper'
 const locales = { ru, enGB }
 
 export default {
   name: 'NewsPageList',
-  components: { TheBreadcrumbs },
-  layout: 'grid',
+  components: { TheGridLayoutWrapper, TheBreadcrumbs },
+
   async asyncData({ params, error, app }) {
     const newsResult = await ApiService.news.item(params.slug).catch((e) => {
       error({ statusCode: 404, message: app.i18n.t('errors.pageNotFound') })
@@ -55,6 +60,45 @@ export default {
     return {
       loading: false,
     }
+  },
+
+  head() {
+    const meta = {}
+
+    // header_h1:"Test heading h1"
+    // meta_description:"Test description"
+    // meta_title:"Test title"
+    // seo_text:
+
+    const title = this.news.seo?.meta_title || this.news.name || null
+    const description =
+      this.news.seo?.meta_description || this.news.short_description || null
+
+    if (title) {
+      meta.title = title
+    }
+    if (description) {
+      meta.meta = [
+        {
+          hid: 'description',
+          name: 'description',
+          content: description,
+        },
+      ]
+    }
+
+    return meta
+
+    // return {
+    //   title: this.$t('seo.home.title'),
+    //   meta: [
+    //     {
+    //       hid: 'description',
+    //       name: 'description',
+    //       content: this.$t('seo.home.description'),
+    //     },
+    //   ],
+    // }
   },
   computed: {
     localeOptions() {
@@ -76,6 +120,9 @@ export default {
     },
     newsTitle() {
       return this.news?.name ?? null
+    },
+    newsHeading() {
+      return this.news.seo?.header_h1 || this.news?.name || null
     },
     createdDate() {
       return format(new Date(this.news.created), 'PPPP', this.localeOptions)

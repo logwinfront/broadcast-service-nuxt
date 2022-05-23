@@ -1,13 +1,13 @@
 <template>
   <div class="news-slider-wrapper">
     <h2 class="text-white text-lg lg:text-2xl font-bold mt-0 mb-1 lg:mb-4">
-      {{ $t('news') }}
+      {{ $t('articles') }}
     </h2>
 
     <client-only>
       <template #placeholder>
         <div class="flex gap-5 overflow-hidden">
-          <TheNewsSliderItem
+          <TheArticlesSliderItem
             v-for="n in 3"
             :key="`news-skeleton-${n}`"
             :item="null"
@@ -16,7 +16,7 @@
       </template>
 
       <div v-if="!items.length" class="flex gap-5 overflow-hidden">
-        <TheNewsSliderItem
+        <TheArticlesSliderItem
           v-for="n in 3"
           :key="`news-skeleton-${n}`"
           class="news-slider-skeleton"
@@ -26,7 +26,7 @@
 
       <swiper v-else :options="sliderOptions">
         <swiper-slide v-for="(item, idx) in items" :key="`news-${idx}`">
-          <TheNewsSliderItem :item="item" />
+          <TheArticlesSliderItem :item="item" />
         </swiper-slide>
       </swiper>
     </client-only>
@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import TheNewsSliderItem from '~/src/components/sliders/news/TheNewsSliderItem'
+import TheArticlesSliderItem from '~/src/components/sliders/articles/TheArticlesSliderItem'
 export default {
-  name: 'TheNewsSlider',
-  components: { TheNewsSliderItem },
+  name: 'TheArticlesSlider',
+  components: { TheArticlesSliderItem },
   props: {
     items: {
       type: Array,

@@ -1,25 +1,30 @@
 <template>
-  <div class="sticky top-0 bg-blue-800 z-10 py-2">
-    <div class="lg:container px-2.5 mx-auto">
+  <div class="bg-blue-800 py-1 lg:py-2">
+    <div class="lg:container px-4 lg:px-3 mx-auto">
       <div class="w-full flex items-center">
         <nuxt-link :to="localePath('/')" class="flex items-center no-underline">
           <img
-            class="mr-2.5 h-12"
+            class="mr-2.5 h-9 lg:h-12"
             src="../../assets/images/sportefir_1.svg"
             alt="logo"
           />
         </nuxt-link>
 
-        <ul class="nav ml-auto flex items-center h-full">
-          <li
-            v-for="(link, idx) in navLinks"
-            :key="`nl-${idx}`"
-            class="nav-item"
-          >
+        <div
+          class="md:hidden space-y-2 ml-auto cursor-pointer"
+          @click="updateMobileMenu"
+        >
+          <div class="w-6 h-0.5 bg-white"></div>
+          <div class="w-6 h-0.5 bg-white"></div>
+          <div class="w-6 h-0.5 bg-white"></div>
+        </div>
+
+        <ul class="invisible md:visible nav ml-auto flex items-center h-full">
+          <li v-for="(link, idx) in links" :key="`nl-${idx}`" class="nav-item">
             <nuxt-link
-              class="text-gray text-base font-semibold px-2.5"
+              class="text-gray lg:text-base font-semibold px-2.5"
               exact-active-class="text-white"
-              :to="localePath(link.to)"
+              :to="localePath(link.link)"
             >
               {{ link.name }}
             </nuxt-link>
@@ -33,12 +38,20 @@
 <script>
 export default {
   name: 'TheHeader',
-  computed: {
-    navLinks() {
-      return [
-        { name: 'Главная', to: '/' },
-        { name: this.$t('news'), to: '/news' },
-      ]
+  props: {
+    active: {
+      type: Boolean,
+      default: false,
+    },
+    links: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  computed: {},
+  methods: {
+    updateMobileMenu() {
+      this.$emit('update-mobile-menu', !this.active)
     },
   },
 }

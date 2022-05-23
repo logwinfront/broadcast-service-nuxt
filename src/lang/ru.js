@@ -22,4 +22,8 @@ export default {
   errors: {
     pageNotFound: 'Страница не найдена',
   },
+  faq: 'FAQ',
+  contacts: 'Контакты',
+  collapse: 'Свернуть',
+  expand: 'Развернуть',
 }

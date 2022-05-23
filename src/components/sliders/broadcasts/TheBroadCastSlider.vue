@@ -1,6 +1,17 @@
 <template>
   <div class="the-broadcast-slider">
-    <h2 v-if="title" class="the-broadcast-slider__title">{{ title }}</h2>
+    <!--    color: #fff;-->
+    <!--    font-size: 24px;-->
+    <!--    font-weight: 600;-->
+    <!--    margin: 0;-->
+    <!--    line-height: 3.75rem;-->
+
+    <h2
+      v-if="title"
+      class="text-white text-lg lg:text-2xl font-bold mt-0 mb-1 lg:mb-4"
+    >
+      {{ title }}
+    </h2>
 
     <client-only>
       <template #placeholder>
@@ -59,8 +70,20 @@ export default {
           sticky: true,
         },
         freeModeSticky: true,
-        slidesPerView: 4,
-        spaceBetween: 20,
+        slidesPerView: 1,
+        spaceBetween: 16,
+        breakpoints: {
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 3,
+          },
+          575: {
+            slidesPerView: 2,
+          },
+        },
       },
     }
   },
@@ -70,15 +93,5 @@ export default {
 <style lang="scss">
 .the-broadcast-item-placeholder {
   width: calc(25% - 15px);
-}
-
-.the-broadcast-slider {
-  &__title {
-    color: #fff;
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0;
-    line-height: 3.75rem;
-  }
 }
 </style>

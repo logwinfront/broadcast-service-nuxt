@@ -24,6 +24,11 @@ export default {
     list: (params) => api.get(`/v1/news/`, { params }),
     item: (slug) => api.get(`/v1/news/${slug}`),
   },
+
+  article: {
+    list: (params) => api.get(`/v1/article/list/`, { params }),
+    item: (slug) => api.get(`/v1/article/${slug}`),
+  },
 }
 //
 // getSportsList: (params) => {

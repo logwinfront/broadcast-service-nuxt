@@ -70,7 +70,7 @@ export default {
 </script>
 
 <style lang="scss">
-$main-slider-width: 1240px;
+$main-slider-width: calc(100vw - 32px);
 
 .main-slider {
   .swiper-wrapper {
@@ -81,5 +81,33 @@ $main-slider-width: 1240px;
 
 .main-slider--placeholder {
   width: $main-slider-width;
+}
+
+@media (min-width: 1024px) {
+  $main-slider-width: 1000px;
+
+  .main-slider {
+    .swiper-wrapper {
+      width: $main-slider-width !important;
+    }
+  }
+
+  .main-slider--placeholder {
+    width: $main-slider-width;
+  }
+}
+
+@media (min-width: 1260px) {
+  $main-slider-width: 1240px;
+
+  .main-slider {
+    .swiper-wrapper {
+      width: $main-slider-width !important;
+    }
+  }
+
+  .main-slider--placeholder {
+    width: $main-slider-width;
+  }
 }
 </style>

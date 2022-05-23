@@ -1,7 +1,7 @@
 <template>
   <component :is="component" class="tab-slider-item">
     <div
-      class="h-24 rounded flex flex-col items-center justify-center px-4 py-2 hover:bg-primary-400 cursor-pointer"
+      class="h-16 lg:h-24 rounded flex flex-col items-center justify-center px-3 lg:px-4 py-1.5 lg:py-2 hover:bg-primary-400 cursor-pointer"
       :class="[isActive ? 'bg-primary-400' : 'bg-primary']"
       @click="$emit('click', tab.slug)"
     >
@@ -40,7 +40,14 @@ export default {
 
 <style lang="scss">
 .tab-slider-item {
-  min-width: 9rem;
-  width: 9rem !important;
+  min-width: 5rem;
+  width: auto !important;
+}
+
+@media (min-width: 1400px) {
+  .tab-slider-item {
+    min-width: 9rem;
+    width: 9rem !important;
+  }
 }
 </style>

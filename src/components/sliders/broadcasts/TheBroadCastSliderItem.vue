@@ -121,8 +121,6 @@ export default {
 
 <style lang="scss">
 .the-broadcast-item {
-  min-width: 240px;
-
   &-card {
     display: flex;
     flex-direction: column;

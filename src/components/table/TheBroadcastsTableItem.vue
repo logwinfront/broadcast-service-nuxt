@@ -1,11 +1,19 @@
 <template>
-  <div class="text-white flex items-center py-1.5">
-    <div class="w-40 flex flex-col pl-2">
-      <p class="text-base">{{ startBroadcastTime }}</p>
+  <div class="text-white flex lg:items-center py-1.5">
+    <div class="lg:w-40 flex flex-col pl-2">
+      <p class="text-sm font-semibold lg:font-normal lg:text-base">
+        {{ startBroadcastTime }}
+      </p>
       <p class="lowercase text-gray text-sm">{{ startBroadcastDate }}</p>
     </div>
-    <div class="flex flex-col items-center flex-1">
-      <div class="flex justify-center items-center mb-1 w-full">
+    <div class="flex flex-col lg:items-center flex-1">
+      <div class="lg:hidden text-white pl-4 text-sm">
+        {{ teamsData.team1.name }} - {{ teamsData.team2.name }}
+      </div>
+
+      <div
+        class="invisible lg:visible flex justify-center items-center mb-1 w-full"
+      >
         <div
           class="broadcast-table-item__team broadcast-table-item__team--left"
         >
@@ -29,11 +37,11 @@
       <nuxt-link
         v-if="showTournament && tournamentName"
         :to="localePath(tournamentLink)"
-        class="text-gray text-center text-xs"
+        class="invisible lg:visible text-gray text-center text-xs"
         >{{ tournamentName }}</nuxt-link
       >
     </div>
-    <div class="w-40 flex justify-end pr-2">
+    <div class="invisible lg:visible w-40 flex justify-end pr-2">
       <TheButton
         :to="broadcastLink"
         class="bg-secondary hover:bg-secondary-400"
@@ -92,7 +100,7 @@ export default {
       return format(this.dateStartObject, 'EEEEEE dd.MM', this.localeOptions)
     },
     tournamentLink() {
-      return `/${this.broadcast.sport?.slug}/${this.broadcast.tournament?.slug}32131`
+      return `/${this.broadcast.sport?.slug}/${this.broadcast.tournament?.slug}`
     },
     tournamentName() {
       return this.broadcast?.tournament?.name
