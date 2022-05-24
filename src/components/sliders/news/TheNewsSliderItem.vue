@@ -6,17 +6,17 @@
       <template v-if="item">
         <nuxt-link class="news-slider-item__text" :to="localePath(newsLink)">
           <div
-            class="news-slider-item__title text-white ellipsis-3-lines font-bold line-clamp-2"
+            class="text-white font-bold line-clamp-2 text-sm"
             :title="item.name"
           >
             {{ item.name }}
           </div>
-          <div class="news-slider-item__desc text-gray line-clamp-3">
+          <div class="news-slider-item__desc text-gray line-clamp-3 text-xs">
             {{ item.short_description }}
           </div>
         </nuxt-link>
         <div
-          class="news-slider-item__image bg-primary-400 rounded overflow-hidden"
+          class="news-slider-item__image ml-3 bg-primary-400 rounded overflow-hidden"
         >
           <div
             class="absolute inset-0 bg-cover bg-center"
@@ -101,8 +101,8 @@ export default {
     padding-top: 4px;
     margin-bottom: 4px;
     transition: color 400ms;
-    font-size: 13px;
-    line-height: 16px;
+    //font-size: 13px;
+    //line-height: 16px;
     font-weight: 600;
     width: 100%;
     margin-top: auto;
@@ -113,7 +113,6 @@ export default {
   &__image {
     position: relative;
     flex-shrink: 0;
-    margin-left: 16px;
   }
 }
 
@@ -131,20 +130,20 @@ export default {
 //  }
 //}
 
-@media screen and (min-width: 600px) and (max-width: 879px) {
-  .news-slider-item__title {
-    font-size: 15px;
-    line-height: 20px;
-    font-style: normal;
-  }
-}
-
-@media screen and (min-width: 600px) {
-  .news-slider-item__title {
-    font-size: 18px;
-    line-height: 24px;
-    font-weight: 900;
-    font-style: normal;
-  }
-}
+//@media screen and (min-width: 600px) and (max-width: 879px) {
+//  .news-slider-item__title {
+//    font-size: 15px;
+//    line-height: 20px;
+//    font-style: normal;
+//  }
+//}
+//
+//@media screen and (min-width: 600px) {
+//  .news-slider-item__title {
+//    font-size: 18px;
+//    line-height: 24px;
+//    font-weight: 900;
+//    font-style: normal;
+//  }
+//}
 </style>

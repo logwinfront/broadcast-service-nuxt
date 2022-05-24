@@ -1,6 +1,6 @@
 <template>
   <nuxt-link :to="localePath(newsLink)" class="group cursor-pointer">
-    <div class="rounded overflow-hidden mb-2 relative">
+    <div class="rounded bg-primary overflow-hidden mb-2 relative">
       <div
         class="aspect-w-16 aspect-h-11 bg-center bg-cover group-hover:scale-110 transition transition-transform"
         :style="imageStyle"
@@ -36,6 +36,10 @@ export default {
       type: Object,
       default: null,
     },
+    type: {
+      type: String,
+      default: 'news',
+    },
   },
   computed: {
     imageStyle() {
@@ -47,7 +51,7 @@ export default {
       return null
     },
     newsLink() {
-      return `/news/${this.item.slug}`
+      return `/${this.type}/${this.item.slug}`
     },
   },
 }

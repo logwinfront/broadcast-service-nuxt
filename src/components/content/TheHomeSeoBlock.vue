@@ -1,67 +1,14 @@
 <template>
   <div class="q-pb-md q-py-xl">
     <div class="seo-block">
-      <h2 class="text-white text-lg lg:text-2xl font-bold mt-0 mb-1 lg:mb-4">
-        Онлайн-кинотеатр ivi: фильмы в хорошем качестве всегда приносят
-        настоящее удовольствие
-      </h2>
+      <h1
+        v-if="title"
+        class="text-white text-lg lg:text-2xl font-bold mt-0 mb-1 lg:mb-4"
+      >
+        {{ title }}
+      </h1>
 
-      <div class="text-gray-200" :class="classes">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis
-          quo, sequi. Aspernatur eligendi mollitia nesciunt odit quas, tempora
-          tempore voluptate.
-        </p>
-        <p>Lorem ipsum dolor sit amet.</p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
-          officiis perferendis, perspiciatis placeat porro possimus repellat
-          soluta tenetur. Accusamus amet commodi cumque neque. Aperiam dolorem
-          error nam quibusdam velit? A ad aperiam architecto beatae deserunt
-          dicta distinctio dolor dolorum eaque, earum enim ex explicabo illum
-          impedit laborum modi non numquam odio quia quibusdam recusandae,
-          repudiandae saepe sit soluta, tempore voluptatem voluptatibus. Ad,
-          adipisci alias aliquam animi aperiam asperiores at consequuntur
-          cupiditate deserunt dignissimos distinctio, doloremque dolores dolorum
-          eveniet exercitationem fugiat harum id in iure labore laboriosam
-          magnam maiores, natus necessitatibus nesciunt nobis numquam officia
-          perspiciatis praesentium provident quasi quod reiciendis suscipit ut
-          voluptate voluptatem voluptatum! Ducimus labore laborum modi
-          reprehenderit?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
-          officiis perferendis, perspiciatis placeat porro possimus repellat
-          soluta tenetur. Accusamus amet commodi cumque neque. Aperiam dolorem
-          error nam quibusdam velit? A ad aperiam architecto beatae deserunt
-          dicta distinctio dolor dolorum eaque, earum enim ex explicabo illum
-          impedit laborum modi non numquam odio quia quibusdam recusandae,
-          repudiandae saepe sit soluta, tempore voluptatem voluptatibus. Ad,
-          adipisci alias aliquam animi aperiam asperiores at consequuntur
-          cupiditate deserunt dignissimos distinctio, doloremque dolores dolorum
-          eveniet exercitationem fugiat harum id in iure labore laboriosam
-          magnam maiores, natus necessitatibus nesciunt nobis numquam officia
-          perspiciatis praesentium provident quasi quod reiciendis suscipit ut
-          voluptate voluptatem voluptatum! Ducimus labore laborum modi
-          reprehenderit?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
-          officiis perferendis, perspiciatis placeat porro possimus repellat
-          soluta tenetur. Accusamus amet commodi cumque neque. Aperiam dolorem
-          error nam quibusdam velit? A ad aperiam architecto beatae deserunt
-          dicta distinctio dolor dolorum eaque, earum enim ex explicabo illum
-          impedit laborum modi non numquam odio quia quibusdam recusandae,
-          repudiandae saepe sit soluta, tempore voluptatem voluptatibus. Ad,
-          adipisci alias aliquam animi aperiam asperiores at consequuntur
-          cupiditate deserunt dignissimos distinctio, doloremque dolores dolorum
-          eveniet exercitationem fugiat harum id in iure labore laboriosam
-          magnam maiores, natus necessitatibus nesciunt nobis numquam officia
-          perspiciatis praesentium provident quasi quod reiciendis suscipit ut
-          voluptate voluptatem voluptatum! Ducimus labore laborum modi
-          reprehenderit?
-        </p>
-      </div>
+      <div class="text-gray-200" :class="classes" v-html="text"></div>
       <p
         class="font-medium text-white text-center cursor-pointer"
         @click="updateShowFullText(!showFullText)"
@@ -75,6 +22,16 @@
 <script>
 export default {
   name: 'TheHomeSeoBlock',
+  props: {
+    text: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      default: null,
+    },
+  },
   data() {
     return {
       showFullText: false,

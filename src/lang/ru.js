@@ -26,4 +26,5 @@ export default {
   contacts: 'Контакты',
   collapse: 'Свернуть',
   expand: 'Развернуть',
+  topBroadcasts: 'ТОП трансляций',
 }

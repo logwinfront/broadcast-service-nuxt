@@ -15,14 +15,13 @@
     <!--    color: #fff;-->
     <!--    z-index: 1;-->
 
-    <div class="absolute left-3 lg:left-3 bottom-3 lg:bottom-3 text-white z-10">
-      <template v-if="!isPlaceholder">
-        <!--        margin-top: 0;-->
-        <!--        margin-bottom: 10px;-->
-        <!--        font-size: 46px;-->
-        <!--        font-weight: 700;-->
-
-        <p class="text-lg lg:text-2xl font-bold">
+    <div class="absolute left-3 lg:left-6 bottom-3 lg:bottom-6 text-white z-10">
+      <template v-if="isPlaceholder">
+        <div class="animate-pulse h-16 w-72 bg-primary rounded mb-2.5"></div>
+        <div class="animate-pulse h-9 w-56 bg-secondary rounded"></div>
+      </template>
+      <template v-else>
+        <p class="text-lg lg:text-4xl font-bold">
           {{ title }}
         </p>
 
@@ -37,10 +36,6 @@
         >
           {{ linkText }}
         </TheButton>
-      </template>
-      <template v-else>
-        <div class="animate-pulse h-16 w-72 bg-primary rounded mb-2.5"></div>
-        <div class="animate-pulse h-9 w-56 bg-secondary rounded"></div>
       </template>
     </div>
   </div>

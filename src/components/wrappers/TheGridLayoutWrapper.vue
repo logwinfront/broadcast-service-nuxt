@@ -14,7 +14,7 @@
     <div class="grid-layout-content">
       <slot />
     </div>
-    <div class="grid-layout-sidebar">
+    <div v-if="$slots['sidebar-banner']" class="grid-layout-sidebar">
       <slot name="sidebar-banner">
         <a href="#" target="_blank" class="grid-layout-sidebar__item">
           <img

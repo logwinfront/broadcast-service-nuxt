@@ -44,8 +44,13 @@ export default {
   computed: {
     swiperOptions() {
       return {
-        spaceBetween: 10,
+        spaceBetween: 6,
         slidesPerView: 'auto',
+        breakpoints: {
+          768: {
+            spaceBetween: 10,
+          },
+        },
       }
     },
   },

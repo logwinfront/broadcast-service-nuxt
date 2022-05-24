@@ -43,26 +43,22 @@ import TheBreadcrumbs from '~/src/components/breadcrumbs/TheBreadcrumbs'
 export default {
   name: 'BroadCastPage',
   components: { TheBreadcrumbs },
-  layout: 'grid',
-  async asyncData({ params, error, app }) {
-    const response = await ApiService.broadcasts.item(params.id).catch((e) => {
-      error({ statusCode: 404, message: app.i18n.t('errors.pageNotFound') })
-    })
-
-    const broadcast = response?.data ?? null
-    if (broadcast) {
-      return { broadcast }
-    }
-
-    error({ statusCode: 404, message: app.i18n.t('errors.pageNotFound') })
-  },
   data() {
     return {
-      // broadcast: null,
+      broadcast: null,
       loading: {
         broadcast: true,
       },
     }
+  },
+
+  async fetch() {
+    await Promise.all([this.getBroadcast()]).catch((e) => {
+      this.$nuxt.error({
+        statusCode: 404,
+        message: this.$t('errors.pageNotFound'),
+      })
+    })
   },
   // async fetch() {
   //   await Promise.all([this.getBroadcast()]).catch((e) => {
@@ -98,9 +94,7 @@ export default {
   methods: {
     async getBroadcast() {
       this.loading.broadcast = true
-      const response = await ApiService.broadcasts
-        .item(this.$route.params.id)
-        .catch((e) => {})
+      const response = await ApiService.broadcasts.item(this.$route.params.id)
 
       this.broadcast = response?.data ?? null
       this.loading.broadcast = false

@@ -14,6 +14,7 @@ export default {
     list: (params) => api.get('/v1/broadcast/list/', { params }),
     item: (id) => api.get(`/v1/broadcast/${id}/`),
     listBySport: (params) => api.get(`/v1/broadcast/tournament/`, { params }),
+    top: () => api.get('/v1/broadcast/top/'),
   },
 
   tournament: {
@@ -22,19 +23,19 @@ export default {
 
   news: {
     list: (params) => api.get(`/v1/news/`, { params }),
-    item: (slug) => api.get(`/v1/news/${slug}`),
+    item: (slug) => api.get(`/v1/news/${slug}/`),
   },
 
   article: {
     list: (params) => api.get(`/v1/articles/`, { params }),
-    item: (slug) => api.get(`/v1/articles/${slug}`),
+    item: (slug) => api.get(`/v1/articles/${slug}/`),
+  },
+
+  settings: {
+    info: () => api.get('/v1/settings/'),
+  },
+
+  page: {
+    item: (slug) => api.get(`/v1/pages/${slug}/`),
   },
 }
-//
-// getSportsList: (params) => {
-//   return chainResponse(api.get("/v1/broadcast/sport/list/", { params }));
-// },
-//
-//   getSport: (slug) => {
-//   return chainResponse(api.get(`/v1/sport/${slug}/`));
-// },

@@ -9,7 +9,7 @@ export default {
   },
 
   env: {
-    baseApiUrl: process.env.BASE_API_URL,
+    baseApiUrl: process.env.BASE_API_URL || 'http://10.8.0.7:8000',
   },
 
   srcDir: 'src/',
@@ -107,16 +107,12 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     '@nuxtjs/i18n',
-    '@nuxtjs/redirect-module',
+    'nuxt-trailingslash-module',
   ],
 
-  redirect: [
-    {
-      from: '^(\\/[^\\?]*[^\\/])(\\?.*)?$',
-      to: '$1/$2',
-      statusCode: 301,
-    },
-  ],
+  trailingslash: {
+    methods: ['GET', 'HEAD'],
+  },
 
   i18n: {
     vueI18nLoader: true,
@@ -151,14 +147,9 @@ export default {
     },
   },
 
-  transition: {
-    name: 'page',
-    mode: 'out-in',
-  },
-
   proxy: {
     '/api': {
-      target: 'http://192.168.60.171:8000',
+      target: process.env.BASE_API_URL,
       changeOrigin: true,
       logLevel: 'info',
       headers: {
@@ -167,7 +158,7 @@ export default {
       // pathRewrite: { '^/api/': '' },
     },
     '/media': {
-      target: 'http://192.168.60.171:8000',
+      target: process.env.BASE_API_URL,
       changeOrigin: true,
       logLevel: 'info',
       headers: {

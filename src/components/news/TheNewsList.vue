@@ -3,7 +3,12 @@
     <div
       class="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-4 md:gap-x-4 md:gap-y-5"
     >
-      <TheNewsItem v-for="item in news" :key="`news-${item.id}`" :item="item" />
+      <TheNewsItem
+        v-for="item in news"
+        :key="`news-${item.id}`"
+        :type="type"
+        :item="item"
+      />
     </div>
 
     <TheButton
@@ -40,6 +45,10 @@ export default {
     count: {
       type: Number,
       default: null,
+    },
+    type: {
+      type: String,
+      default: 'news',
     },
   },
   computed: {

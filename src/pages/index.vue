@@ -34,7 +34,12 @@
 
       <TheNewsSlider :items="news" class="mb-10" />
 
-      <TheHomeSeoBlock class="mb-10" />
+      <TheHomeSeoBlock
+        v-if="seoText"
+        :title="seoHeader"
+        :text="seoText"
+        class="mb-10"
+      />
 
       <TheArticlesSlider :items="articles" />
     </div>
@@ -113,7 +118,7 @@ export default {
 
     const getArticles = async () => {
       if (this.$store.getters['articles/getArticlesLoaded']) {
-        this.news = this.$store.getters['articles/getArticlesList']
+        this.articles = this.$store.getters['articles/getArticlesList']
         return
       }
       const response = await ApiService.article
@@ -143,6 +148,17 @@ export default {
       })
     }
 
+    const getSettings = async () => {
+      await ApiService.settings
+        .info()
+        .then(({ data }) => {
+          this.$store.dispatch('settings/setSettings', data ?? {})
+        })
+        .catch((e) => {
+          console.log(e.response)
+        })
+    }
+
     await Promise.all([
       mainSlider(),
       actualBroadcasts(),
@@ -150,21 +166,27 @@ export default {
       this.getBroadcasts(),
       getNews(),
       getArticles(),
+      getSettings(),
     ])
   },
   head() {
+    const seo = this.$store.getters['settings/getHomeSeo']
+    const title = seo?.meta_title ? seo.meta_title : this.$t('seo.home.title')
+    const content = seo?.meta_description
+      ? seo.meta_description
+      : this.$t('seo.home.description')
+
     return {
-      title: this.$t('seo.home.title'),
+      title,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.$t('seo.home.description'),
+          content,
         },
       ],
     }
   },
-
   computed: {
     sportTabsForSlider() {
       return [{ name: this.$t('all'), slug: 'all' }, ...this.sportTabs]
@@ -180,6 +202,14 @@ export default {
 
     broadcastsListTotal() {
       return this.broadcasts?.count ?? 0
+    },
+
+    seoText() {
+      return this.$store.getters['settings/getHomeSeo']?.seo_text ?? ''
+    },
+
+    seoHeader() {
+      return this.$store.getters['settings/getHomeSeo']?.header_h1 ?? ''
     },
   },
 

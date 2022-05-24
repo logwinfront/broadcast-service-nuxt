@@ -54,10 +54,8 @@ export default {
     }
   },
   async fetch() {
-    console.log('tournament fetch')
     await Promise.all([this.getSportInfo(), this.getTournamentInfo()]).catch(
       (e) => {
-        console.log('error')
         this.$nuxt.error({
           statusCode: 404,
           message: this.$t('errors.pageNotFound'),

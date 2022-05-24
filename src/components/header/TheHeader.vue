@@ -19,10 +19,14 @@
           <div class="w-6 h-0.5 bg-white"></div>
         </div>
 
-        <ul class="invisible md:visible nav ml-auto flex items-center h-full">
-          <li v-for="(link, idx) in links" :key="`nl-${idx}`" class="nav-item">
+        <ul class="hidden md:flex nav ml-auto items-center h-full">
+          <li
+            v-for="(link, idx) in links"
+            :key="`nl-${idx}`"
+            class="nav-item text-gray"
+          >
             <nuxt-link
-              class="text-gray lg:text-base font-semibold px-2.5"
+              class="lg:text-base font-semibold px-2.5"
               exact-active-class="text-white"
               :to="localePath(link.link)"
             >

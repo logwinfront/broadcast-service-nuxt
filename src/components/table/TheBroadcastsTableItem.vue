@@ -11,37 +11,46 @@
         {{ teamsData.team1.name }} - {{ teamsData.team2.name }}
       </div>
 
-      <div
-        class="invisible lg:visible flex justify-center items-center mb-1 w-full"
-      >
-        <div
-          class="broadcast-table-item__team broadcast-table-item__team--left"
-        >
-          <div class="truncate font-light" :title="teamsData.team1.name">
-            {{ teamsData.team1.name }}
+      <div class="hidden lg:flex justify-center items-center mb-1 w-full">
+        <template v-if="hasTeams">
+          <div
+            class="broadcast-table-item__team broadcast-table-item__team--left"
+          >
+            <div class="truncate font-light" :title="teamsData.team1.name">
+              {{ teamsData.team1.name }}
+            </div>
+            <img
+              v-if="teamsData.team1.logo"
+              :src="teamsData.team1.logo"
+              alt=""
+            />
           </div>
-          <img v-if="teamsData.team1.logo" :src="teamsData.team1.logo" alt="" />
-        </div>
 
-        <div class="px-5 text-gray">-vs-</div>
+          <div class="px-5 text-gray">-vs-</div>
 
-        <div
-          class="broadcast-table-item__team broadcast-table-item__team--right"
-        >
-          <img v-if="teamsData.team2.logo" :src="teamsData.team2.logo" alt="" />
-          <div class="truncate font-light" :title="teamsData.team2.name">
-            {{ teamsData.team2.name }}
+          <div
+            class="broadcast-table-item__team broadcast-table-item__team--right"
+          >
+            <img
+              v-if="teamsData.team2.logo"
+              :src="teamsData.team2.logo"
+              alt=""
+            />
+            <div class="truncate font-light" :title="teamsData.team2.name">
+              {{ teamsData.team2.name }}
+            </div>
           </div>
-        </div>
+        </template>
+        <div v-else>{{ broadcast.title }}</div>
       </div>
       <nuxt-link
         v-if="showTournament && tournamentName"
         :to="localePath(tournamentLink)"
-        class="invisible lg:visible text-gray text-center text-xs"
+        class="hidden lg:block text-gray text-center text-xs"
         >{{ tournamentName }}</nuxt-link
       >
     </div>
-    <div class="invisible lg:visible w-40 flex justify-end pr-2">
+    <div class="hidden lg:flex w-40 justify-end pr-2">
       <TheButton
         :to="broadcastLink"
         class="bg-secondary hover:bg-secondary-400"
@@ -72,6 +81,9 @@ export default {
     },
   },
   computed: {
+    hasTeams() {
+      return this.broadcast?.team1 && this.broadcast?.team2
+    },
     broadcastLink() {
       return `/broadcast/${this.broadcast.id}`
     },

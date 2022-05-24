@@ -1,7 +1,7 @@
 <template>
   <div class="text-white date-slider flex items-end">
     <button
-      class="invisible lg:visible text-3xl date-slider--prev h-14 w-14 border-primary border-2 rounded flex items-center justify-center"
+      class="hidden lg:flex text-3xl date-slider--prev h-14 w-14 border-primary border-2 rounded items-center justify-center mr-2.5"
       :class="[page === 0 ? 'text-gray cursor-not-allowed' : 'text-white']"
     >
       <client-only>
@@ -10,7 +10,7 @@
     </button>
     <client-only>
       <template #placeholder>
-        <div class="mx-2.5 flex">
+        <div class="flex">
           <div
             v-for="i in 7"
             :key="`sk-${i}`"
@@ -45,7 +45,7 @@
           <div
             v-for="date in dates"
             :key="date.timestamp"
-            class="date-slider__item pt-3 w-20"
+            class="date-slider__item pt-3 w-20 mr-1.5 md:mr-2.5 last-of-type:!mr-0"
           >
             <div
               class="date-slider__item-wrap h-14 rounded flex flex-col items-center"
@@ -63,7 +63,7 @@
               <div class="date-slider__item-day">
                 {{ date.date }}
               </div>
-              <div class="date-slider__item-weekday" :class="{}">
+              <div class="date-slider__item-weekday">
                 {{ date.weekDay }}
               </div>
             </div>
@@ -72,7 +72,7 @@
       </swiper>
     </client-only>
     <button
-      class="invisible lg:visible text-3xl text-white date-slider--next h-14 w-14 border-primary border-2 rounded flex items-center justify-center"
+      class="hidden lg:flex text-3xl text-white date-slider--next h-14 w-14 border-primary border-2 rounded flex items-center justify-center ml-2.5"
     >
       <client-only>
         <Icon icon="ph:caret-right-light" />
@@ -163,13 +163,12 @@ export default {
         locale: locales[this.$i18n.localeProperties.dateFnsCode],
       }
 
-      const weekDay = isToday(date)
-        ? this.$t('today')
-        : format(date, 'EEEEEE', localeOptions)
+      const weekDay = format(date, 'EEEEEE', localeOptions)
 
       return {
         date: date.getDate(),
         weekDay,
+        isToday: isToday(date),
         isWeekend: isWeekend(date),
         timestamp: date.getTime(),
         month: format(date, 'MMMM', localeOptions),
@@ -205,6 +204,8 @@ export default {
 .date-slider {
   .swiper-container {
     width: 620px !important;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   &__arrows {
@@ -236,10 +237,6 @@ export default {
     font-size: 30px;
   }
   &__item {
-    &:not(:last-of-type) {
-      margin-right: 10px;
-    }
-
     &-wrap {
       position: relative;
       padding: 6px 12px;
@@ -275,15 +272,6 @@ export default {
 
     &--weekend {
       //color: $primary;
-    }
-  }
-}
-
-@media (min-width: 1400px) {
-  .date-slider {
-    .swiper-container {
-      margin-left: 10px;
-      margin-right: 10px;
     }
   }
 }
