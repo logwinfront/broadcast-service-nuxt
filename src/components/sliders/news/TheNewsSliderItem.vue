@@ -1,17 +1,19 @@
 <template>
-  <div class="news-slider-item">
+  <div class="news-slider-item pt-8">
     <div
       class="news-slider-item--wrapper py-4 px-4 lg:px-5 bg-primary rounded-lg rounded-br-none hover:bg-opacity-80"
     >
       <template v-if="item">
         <nuxt-link class="news-slider-item__text" :to="localePath(newsLink)">
           <div
-            class="text-white font-bold line-clamp-2 text-sm"
+            class="text-white font-bold line-clamp-2 md:text-sm"
             :title="item.name"
           >
             {{ item.name }}
           </div>
-          <div class="news-slider-item__desc text-gray line-clamp-3 text-xs">
+          <div
+            class="news-slider-item__desc text-gray line-clamp-3 text-sm md:text-xs"
+          >
             {{ item.short_description }}
           </div>
         </nuxt-link>
@@ -76,9 +78,8 @@ export default {
 
 <style lang="scss">
 .news-slider-item {
-  padding-top: 20px;
   &--wrapper {
-    height: 153px;
+    height: 220px;
     display: flex;
     justify-content: space-between;
 
@@ -113,13 +114,24 @@ export default {
   &__image {
     position: relative;
     flex-shrink: 0;
+    width: 180px;
+    top: -32px;
+    height: calc(100% + 32px);
   }
 }
 
-.news-slider-item__image {
-  width: 100px;
-  top: -30px;
-  height: calc(100% + 30px);
+@media (min-width: 575px) {
+  .news-slider-item {
+    &--wrapper {
+      height: 140px;
+    }
+
+    &__image {
+      width: 80px;
+      top: -30px;
+      height: calc(100% + 30px);
+    }
+  }
 }
 
 //@media screen and (min-width: 600px) {

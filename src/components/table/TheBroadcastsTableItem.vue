@@ -19,11 +19,7 @@
             <div class="truncate font-light" :title="teamsData.team1.name">
               {{ teamsData.team1.name }}
             </div>
-            <img
-              v-if="teamsData.team1.logo"
-              :src="teamsData.team1.logo"
-              alt=""
-            />
+            <img :src="teamsData.team1.icon" alt="" />
           </div>
 
           <div class="px-5 text-gray">-vs-</div>
@@ -31,11 +27,7 @@
           <div
             class="broadcast-table-item__team broadcast-table-item__team--right"
           >
-            <img
-              v-if="teamsData.team2.logo"
-              :src="teamsData.team2.logo"
-              alt=""
-            />
+            <img :src="teamsData.team2.icon" alt="" />
             <div class="truncate font-light" :title="teamsData.team2.name">
               {{ teamsData.team2.name }}
             </div>
@@ -91,11 +83,11 @@ export default {
       return {
         team1: {
           name: this.broadcast?.team1?.name ?? '',
-          icon: this.broadcast?.team1?.logo ?? null,
+          icon: this.broadcast?.team1?.logo ?? '/images/no-team.svg',
         },
         team2: {
           name: this.broadcast?.team2?.name ?? '',
-          icon: this.broadcast?.team2?.logo ?? null,
+          icon: this.broadcast?.team2?.logo ?? '/images/no-team.svg',
         },
       }
     },

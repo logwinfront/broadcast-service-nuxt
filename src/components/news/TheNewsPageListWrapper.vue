@@ -10,7 +10,9 @@
       :loading="loading"
       @load-more="loadMore"
     />
-    <template #sidebar-banner> sidebar </template>
+    <template #sidebar-banner>
+      <slot name="sidebar" />
+    </template>
   </TheGridLayoutWrapper>
 </template>
 
@@ -39,7 +41,9 @@ export default {
     }
   },
   async fetch() {
-    await this.getNews()
+    const { results, count } = await this.getNews()
+    this.news = results
+    this.total = count
   },
   computed: {
     config() {
@@ -107,24 +111,23 @@ export default {
           data,
           loaded: true,
         })
+        return data
       })
     },
     getArticlesApi(params = {}) {
       if (this.$store.getters['articles/getArticlesLoaded']) {
         const dataFromStore = this.$store.getters['articles/getArticlesObject']
         if (dataFromStore) {
-          const { results, count } = dataFromStore
-          this.news = results
-          this.total = count
-          return
+          return dataFromStore
         }
       }
 
-      return ApiService.news.list(params).then(({ data }) => {
+      return ApiService.article.list(params).then(({ data }) => {
         this.$store.dispatch('articles/setArticlesInit', {
           data,
           loaded: true,
         })
+        return data
       })
     },
     getNews() {

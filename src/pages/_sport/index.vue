@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <TheGridLayoutWrapper>
     <TheBreadcrumbs
       :breadcrumbs="breadcrumbs"
       :title="breadcrumbsTitle"
@@ -57,7 +57,7 @@
         </template>
       </TheTranslationsWrapper>
     </div>
-  </div>
+  </TheGridLayoutWrapper>
 </template>
 
 <script>
@@ -68,10 +68,12 @@ import { getDateParams } from '~/src/utils/pure-functions'
 import TheDateSlider from '~/src/components/sliders/dates/TheDateSlider'
 import TheNoDataBlock from '~/src/components/error/TheNoDataBlock'
 import TheBreadcrumbs from '~/src/components/breadcrumbs/TheBreadcrumbs'
+import TheGridLayoutWrapper from '~/src/components/wrappers/TheGridLayoutWrapper'
 
 export default {
   name: 'SportPage',
   components: {
+    TheGridLayoutWrapper,
     TheBreadcrumbs,
     TheNoDataBlock,
     TheDateSlider,

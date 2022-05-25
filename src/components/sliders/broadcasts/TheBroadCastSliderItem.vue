@@ -2,7 +2,7 @@
   <component
     :is="component"
     :to="linkToBroadCast"
-    class="the-broadcast-item-card h-36 rounded-md"
+    class="the-broadcast-item-card h-40 rounded-md"
   >
     <div class="the-broadcast-item-card__bg bg-primary" :style="styles"></div>
 
@@ -12,11 +12,11 @@
       ></div>
 
       <div class="the-broadcast-item__logos">
-        <div class="h-12 w-12 bg-primary-400 mr-6 rounded"></div>
+        <div class="h-16 w-12 bg-primary-400 mr-6 rounded"></div>
 
         <Icon icon="ph:x" />
 
-        <div class="h-12 w-12 bg-primary-400 ml-6 rounded"></div>
+        <div class="h-16 w-12 bg-primary-400 ml-6 rounded"></div>
       </div>
 
       <div
@@ -31,23 +31,15 @@
       </div>
 
       <div class="the-broadcast-item__logos">
-        <TheImg
-          class="h-12"
-          :src="item.broadcast.team1.logo"
-          :alt="item.broadcast.team1.name"
-        />
+        <TheImg class="h-16" :src="teams.team1.logo" :alt="teams.team1.name" />
 
         <Icon icon="ph:x" />
 
-        <TheImg
-          class="h-12"
-          :src="item.broadcast.team2.logo"
-          :alt="item.broadcast.team2.name"
-        />
+        <TheImg class="h-16" :src="teams.team2.logo" :alt="teams.team2.name" />
       </div>
 
-      <div class="the-broadcast-item__title truncate px-5">
-        {{ item.broadcast.title }}
+      <div class="the-broadcast-item__title line-clamp-2 text-center px-5">
+        {{ broadcastTitle }}
       </div>
     </template>
   </component>
@@ -74,6 +66,27 @@ export default {
     },
   },
   computed: {
+    hasTeams() {
+      return this.item?.broadcast?.team1 && this.item?.broadcast?.team2
+    },
+    broadcastTitle() {
+      if (this.hasTeams) {
+        return `${this.teams.team1.name} - ${this.teams.team2.name}`
+      }
+      return this.item?.broadcast?.title ?? ''
+    },
+    teams() {
+      return {
+        team1: {
+          name: this.item?.broadcast?.team1.name ?? '',
+          logo: this.item?.broadcast?.team1.logo ?? '/images/no-team.svg',
+        },
+        team2: {
+          name: this.item?.broadcast?.team2.name ?? '',
+          logo: this.item?.broadcast?.team2.logo ?? '/images/no-team.svg',
+        },
+      }
+    },
     component() {
       if (this.isPlaceholder) {
         return 'div'
@@ -86,6 +99,10 @@ export default {
       }
     },
     startBroadcastDate() {
+      if (!this.item) {
+        return
+      }
+
       const dateStart = new Date(this.item.broadcast.datetime_start)
 
       if (isToday(dateStart)) {
@@ -99,9 +116,7 @@ export default {
     },
 
     styles() {
-      const image = this.item?.broadcast?.image
-        ? this.item?.broadcast?.image
-        : null
+      const image = `/images/sports/${this.item.broadcast.sport.slug}.png.png`
       if (this.isPlaceholder || !image) {
         return {}
       }
@@ -128,7 +143,6 @@ export default {
     justify-content: flex-end;
     //height: 150px;
     position: relative;
-    padding: 0 10px;
     overflow: hidden;
 
     &__bg {
@@ -149,7 +163,7 @@ export default {
         top: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.6);
         transition: 0.3s;
       }
     }

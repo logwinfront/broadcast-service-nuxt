@@ -27,4 +27,5 @@ export default {
   collapse: 'Свернуть',
   expand: 'Развернуть',
   topBroadcasts: 'ТОП трансляций',
+  popularArticles: 'Популярные статьи',
 }
