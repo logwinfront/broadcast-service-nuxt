@@ -116,11 +116,10 @@ export default {
     },
 
     styles() {
-      const image = `/images/sports/${this.item.broadcast.sport.slug}.png.png`
-      if (this.isPlaceholder || !image) {
+      if (this.isPlaceholder) {
         return {}
       }
-
+      const image = `/images/sports/${this.item.broadcast.sport.slug}.png.png`
       return { backgroundImage: `url('${image}')` }
     },
 

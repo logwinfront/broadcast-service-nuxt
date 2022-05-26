@@ -8,7 +8,12 @@
     </div>
     <div class="flex flex-col lg:items-center flex-1">
       <div class="lg:hidden text-white pl-4 text-sm">
-        {{ teamsData.team1.name }} - {{ teamsData.team2.name }}
+        <template v-if="hasTeams">
+          {{ teamsData.team1.name }} - {{ teamsData.team2.name }}
+        </template>
+        <template v-else>
+          {{ broadcast.title }}
+        </template>
       </div>
 
       <div class="hidden lg:flex justify-center items-center mb-1 w-full">

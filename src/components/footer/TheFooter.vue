@@ -20,23 +20,25 @@
         </ul>
       </div>
       <div class="pt-4 sm:pt-0 !row-span-2 lg:!row-span-1 lg:!col-span-2">
-        <div class="font-bold text-sm mb-1 text-white">
-          {{ $t('topBroadcasts') }}
-        </div>
-        <ul class="grid lg:grid-cols-2 gap-x-4">
-          <li
-            v-for="item in broadcastSliced"
-            :key="item.link"
-            class="text-sm mb-1"
-          >
-            <nuxt-link
-              class="line-clamp-1 hover:text-white"
-              active-class="text-white"
-              :to="localePath(`/broadcast/${item.id}`)"
-              >{{ item.title }}</nuxt-link
+        <template v-if="topBroadcasts.length">
+          <div class="font-bold text-sm mb-1 text-white">
+            {{ $t('topBroadcasts') }}
+          </div>
+          <ul class="grid lg:grid-cols-2 gap-x-4">
+            <li
+              v-for="item in topBroadcasts"
+              :key="item.link"
+              class="text-sm mb-1"
             >
-          </li>
-        </ul>
+              <nuxt-link
+                class="line-clamp-1 hover:text-white"
+                active-class="text-white"
+                :to="localePath(`/broadcast/${item.id}`)"
+                >{{ item.title }}</nuxt-link
+              >
+            </li>
+          </ul>
+        </template>
       </div>
       <div>
         <ul>
@@ -84,16 +86,13 @@ export default {
     }
   },
   async fetch() {
-    const topBroadcastsResponse = await ApiService.broadcasts.top().catch()
+    const topBroadcastsResponse = await ApiService.broadcasts
+      .top({ page_size: TOP_BROADCASTS_PER_COLUMN })
+      .catch()
 
     if (topBroadcastsResponse) {
       this.topBroadcasts = topBroadcastsResponse.data
     }
-  },
-  computed: {
-    broadcastSliced() {
-      return this.topBroadcasts.slice(0, TOP_BROADCASTS_PER_COLUMN)
-    },
   },
 }
 </script>
